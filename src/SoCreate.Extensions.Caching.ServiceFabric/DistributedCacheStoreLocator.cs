@@ -112,7 +112,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             try
             {
                 bool hasPages = true;
-                var query = new ServiceQueryDescription(applicationName) { MaxResults = 50 };
+                var query = new ServiceQueryDescription(applicationName) {};
 
                 while (hasPages)
                 {

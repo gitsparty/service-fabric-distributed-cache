@@ -47,7 +47,11 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             }
         }
 
-        public DistributedCacheStoreService(StatefulServiceContext context, IReliableStateManagerReplica2 reliableStateManagerReplica, ISystemClock systemClock, Action<string> log)
+        public DistributedCacheStoreService(
+            StatefulServiceContext context,
+            IReliableStateManagerReplica2 reliableStateManagerReplica,
+            ISystemClock systemClock,
+            Action<string> log)
             : base(context, reliableStateManagerReplica)
         {
             _serviceUri = context.ServiceName;
@@ -90,7 +94,73 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
 
             return null;
         }
-        
+
+        public async Task<CreateItemResult> CreateCachedItemAsync(
+            string key,
+            byte[] value,
+            TimeSpan? slidingExpiration,
+            DateTimeOffset? absoluteExpiration)
+        {
+            if (slidingExpiration.HasValue)
+            {
+                var now = _systemClock.UtcNow;
+                absoluteExpiration = now.AddMilliseconds(slidingExpiration.Value.TotalMilliseconds);
+            }
+
+            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+
+            return await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancellationToken, state) =>
+            {
+                _log?.Invoke($"Set cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+
+                Func<string, Task<ConditionalValue<CachedItem>>> getCacheItem = async (string cacheKey) => await cacheStore.TryGetValueAsync(tx, cacheKey, LockMode.Update);
+                var linkedDictionaryHelper = new LinkedDictionaryHelper(getCacheItem, ByteSizeOffset);
+
+                var cacheStoreInfo = (await cacheStoreMetadata.TryGetValueAsync(tx, CacheStoreMetadataKey, LockMode.Update)).Value ?? new CacheStoreMetadata(0, null, null);
+                var existingCacheItem = (await getCacheItem(key)).Value;
+                var cachedItem = ApplyAbsoluteExpiration(existingCacheItem, absoluteExpiration) ?? new CachedItem(value, null, null, slidingExpiration, absoluteExpiration);
+
+                // empty linked dictionary
+                if (cacheStoreInfo.FirstCacheKey == null)
+                {
+                    var metadata = new CacheStoreMetadata(value.Length + ByteSizeOffset, key, key);
+                    await cacheStoreMetadata.SetAsync(tx, CacheStoreMetadataKey, metadata);
+                    await cacheStore.SetAsync(tx, key, cachedItem);
+
+                    return new CreateItemResult
+                    {
+                        isConflict = false,
+                        CachedItem = cachedItem
+                    };
+                }
+                else
+                {
+                    var cacheMetadata = cacheStoreInfo;
+
+                    // linked node already exists in dictionary
+                    if (existingCacheItem != null)
+                    {
+                        return new CreateItemResult
+                        {
+                            isConflict = true,
+                            CachedItem = null
+                        };
+                    }
+
+                    // add to last
+                    var addLastResult = await linkedDictionaryHelper.AddLast(cacheMetadata, key, cachedItem, value);
+                    await ApplyChanges(tx, cacheStore, cacheStoreMetadata, addLastResult);
+
+                    return new CreateItemResult
+                    {
+                        isConflict = false,
+                        CachedItem = cachedItem
+                    };
+                }
+            });
+        }
+
         public async Task SetCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration)
         {
             if (slidingExpiration.HasValue)

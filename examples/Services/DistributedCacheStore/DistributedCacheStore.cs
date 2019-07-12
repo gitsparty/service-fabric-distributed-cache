@@ -9,6 +9,6 @@ namespace DistributedCacheStore
             : base(context, (message) => ServiceEventSource.Current.ServiceMessage(context, message))
         { }
 
-        protected override int MaxCacheSizeInMegabytes => 1000;
+        protected override int MaxCacheSizeInMegabytes => 1500;
     }
 }

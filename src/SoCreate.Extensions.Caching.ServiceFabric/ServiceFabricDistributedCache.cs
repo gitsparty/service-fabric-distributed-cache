@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
 namespace SoCreate.Extensions.Caching.ServiceFabric
 {
-    class ServiceFabricDistributedCache : IDistributedCache
+    class ServiceFabricDistributedCache : IDistributedCacheWithCreate
     {
         private readonly IDistributedCacheStoreLocator _distributedCacheStoreLocator;
         private readonly ISystemClock _systemClock;
@@ -78,6 +78,22 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             key = FormatCacheKey(key);
             var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
             await proxy.SetCachedItemAsync(key, value, options.SlidingExpiration, absoluteExpireTime).ConfigureAwait(false);
+        }
+
+        public async Task<CreateItemResult> CreateCachedItemAsync(
+            string key,
+            byte[] value,
+            DistributedCacheEntryOptions options)
+        {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (value == null) throw new ArgumentNullException(nameof(value));
+
+            var absoluteExpireTime = GetAbsoluteExpiration(_systemClock.UtcNow, options);
+            ValidateOptions(options.SlidingExpiration, absoluteExpireTime);
+
+            key = FormatCacheKey(key);
+            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
+            return await proxy.CreateCachedItemAsync(key, value, options.SlidingExpiration, absoluteExpireTime).ConfigureAwait(false);
         }
 
         private DateTimeOffset? GetAbsoluteExpiration(DateTimeOffset utcNow, DistributedCacheEntryOptions options)

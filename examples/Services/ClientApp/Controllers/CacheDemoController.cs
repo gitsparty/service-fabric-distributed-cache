@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using SoCreate.Extensions.Caching.ServiceFabric;
 
 namespace ClientApp.Controllers
 {
@@ -12,9 +13,9 @@ namespace ClientApp.Controllers
     [ApiController]
     public class CacheDemoController : ControllerBase
     {
-        private readonly IDistributedCache _distributedCache;
+        private readonly IDistributedCacheWithCreate _distributedCache;
 
-        public CacheDemoController(IDistributedCache distributedCache)
+        public CacheDemoController(IDistributedCacheWithCreate distributedCache)
         {
             _distributedCache = distributedCache;
         }
@@ -71,7 +72,7 @@ namespace ClientApp.Controllers
             if(bytes != null)
                 return Content(Encoding.UTF8.GetString(bytes));
 
-            return new EmptyResult();
+            return new NotFoundResult();
         }
 
         [HttpPut("{key}")]
@@ -85,6 +86,27 @@ namespace ClientApp.Controllers
                 var options = new DistributedCacheEntryOptions();
                 options.SlidingExpiration = TimeSpan.FromDays(1);
                 await _distributedCache.SetAsync(key, Encoding.UTF8.GetBytes(content), options);
+            }
+        }
+
+        [HttpPost("{key}")]
+        public async Task<ActionResult<string>> Post(string key)
+        {
+            var request = HttpContext.Request;
+            using (var reader = new StreamReader(request.Body))
+            {
+                var content = await reader.ReadToEndAsync();
+
+                var options = new DistributedCacheEntryOptions();
+                options.SlidingExpiration = TimeSpan.FromDays(1);
+                var result = await _distributedCache.CreateCachedItemAsync(key, Encoding.UTF8.GetBytes(content), options);
+
+                if (result.isConflict)
+                {
+                    return new ConflictResult();
+                }
+
+                return Content(Encoding.UTF8.GetString(result.CachedItem.Value));
             }
         }
 

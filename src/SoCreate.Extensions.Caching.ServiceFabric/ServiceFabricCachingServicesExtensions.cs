@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services
                 .AddSingleton<IDistributedCacheStoreLocator, DistributedCacheStoreLocator>()
                 .AddSingleton<ISystemClock, SystemClock>()
-                .AddSingleton<IDistributedCache, ServiceFabricDistributedCache>();
+                .AddSingleton<IDistributedCacheWithCreate, ServiceFabricDistributedCache>();
         }
     }
 }
