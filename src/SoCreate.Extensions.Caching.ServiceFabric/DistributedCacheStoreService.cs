@@ -45,6 +45,11 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             {
                 throw new InvalidOperationException("Failed to set CacheStoreMetadata custom serializer");
             }
+
+            if (!StateManager.TryAddStateSerializer(new CreateItemResultSerializer()))
+            {
+                throw new InvalidOperationException("Failed to set CreateItemResultSerializer custom serializer");
+            }
         }
 
         public DistributedCacheStoreService(
