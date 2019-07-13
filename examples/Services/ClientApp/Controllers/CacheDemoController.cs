@@ -99,14 +99,21 @@ namespace ClientApp.Controllers
 
                 var options = new DistributedCacheEntryOptions();
                 options.SlidingExpiration = TimeSpan.FromDays(1);
-                var result = await _distributedCache.CreateCachedItemAsync(key, Encoding.UTF8.GetBytes(content), options);
-
-                if (result.isConflict)
+                try
                 {
-                    return new ConflictResult();
-                }
+                    var result = await _distributedCache.CreateCachedItemAsync(key, Encoding.UTF8.GetBytes(content), options);
 
-                return Content(Encoding.UTF8.GetString(result.CachedItem.Value));
+                    if (result.isConflict)
+                    {
+                        return new ConflictResult();
+                    }
+
+                    return Content(Encoding.UTF8.GetString(result.CachedItem.Value));
+                }
+                catch (Exception ex)
+                {
+                    return new StatusCodeResult(500);
+                }
             }
         }
 

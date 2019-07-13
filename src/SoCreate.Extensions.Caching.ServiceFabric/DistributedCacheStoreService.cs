@@ -128,11 +128,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
                     await cacheStoreMetadata.SetAsync(tx, CacheStoreMetadataKey, metadata);
                     await cacheStore.SetAsync(tx, key, cachedItem);
 
-                    return new CreateItemResult
-                    {
-                        isConflict = false,
-                        CachedItem = cachedItem
-                    };
+                    return new CreateItemResult(false, cachedItem);
                 }
                 else
                 {
@@ -141,22 +137,14 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
                     // linked node already exists in dictionary
                     if (existingCacheItem != null)
                     {
-                        return new CreateItemResult
-                        {
-                            isConflict = true,
-                            CachedItem = null
-                        };
+                        return new CreateItemResult(true, null);
                     }
 
                     // add to last
                     var addLastResult = await linkedDictionaryHelper.AddLast(cacheMetadata, key, cachedItem, value);
                     await ApplyChanges(tx, cacheStore, cacheStoreMetadata, addLastResult);
 
-                    return new CreateItemResult
-                    {
-                        isConflict = false,
-                        CachedItem = cachedItem
-                    };
+                    return new CreateItemResult(false, cachedItem);
                 }
             });
         }
