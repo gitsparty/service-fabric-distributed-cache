@@ -6,7 +6,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
 {
     public interface IServiceFabricCacheStoreService : IService
     {
-        Task<CreateItemResult> CreateCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration);
+        Task<byte[]> CreateCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration);
 
         Task<byte[]> GetCachedItemAsync(string key);
         Task SetCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration);

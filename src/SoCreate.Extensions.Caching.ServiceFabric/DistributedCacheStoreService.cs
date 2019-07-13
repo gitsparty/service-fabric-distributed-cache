@@ -100,7 +100,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             return null;
         }
 
-        public async Task<CreateItemResult> CreateCachedItemAsync(
+        public async Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
             TimeSpan? slidingExpiration,
@@ -133,7 +133,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
                     await cacheStoreMetadata.SetAsync(tx, CacheStoreMetadataKey, metadata);
                     await cacheStore.SetAsync(tx, key, cachedItem);
 
-                    return new CreateItemResult(false, cachedItem);
+                    return cachedItem.Value;
                 }
                 else
                 {
@@ -142,14 +142,14 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
                     // linked node already exists in dictionary
                     if (existingCacheItem != null)
                     {
-                        return new CreateItemResult(true, null);
+                        return null;
                     }
 
                     // add to last
                     var addLastResult = await linkedDictionaryHelper.AddLast(cacheMetadata, key, cachedItem, value);
                     await ApplyChanges(tx, cacheStore, cacheStoreMetadata, addLastResult);
 
-                    return new CreateItemResult(false, cachedItem);
+                    return cachedItem.Value;
                 }
             });
         }

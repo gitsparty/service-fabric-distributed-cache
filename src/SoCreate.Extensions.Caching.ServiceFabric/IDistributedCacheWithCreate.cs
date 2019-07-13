@@ -6,7 +6,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
 {
     public interface IDistributedCacheWithCreate : IDistributedCache
     {
-        Task<CreateItemResult> CreateCachedItemAsync(
+        Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options);

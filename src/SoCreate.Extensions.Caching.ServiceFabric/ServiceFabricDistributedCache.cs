@@ -80,7 +80,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             await proxy.SetCachedItemAsync(key, value, options.SlidingExpiration, absoluteExpireTime).ConfigureAwait(false);
         }
 
-        public async Task<CreateItemResult> CreateCachedItemAsync(
+        public async Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options)

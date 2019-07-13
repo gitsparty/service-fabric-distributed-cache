@@ -103,12 +103,12 @@ namespace ClientApp.Controllers
                 {
                     var result = await _distributedCache.CreateCachedItemAsync(key, Encoding.UTF8.GetBytes(content), options);
 
-                    if (result.isConflict)
+                    if (result == null)
                     {
                         return new ConflictResult();
                     }
 
-                    return Content(Encoding.UTF8.GetString(result.CachedItem.Value));
+                    return Content(Encoding.UTF8.GetString(result));
                 }
                 catch (Exception ex)
                 {

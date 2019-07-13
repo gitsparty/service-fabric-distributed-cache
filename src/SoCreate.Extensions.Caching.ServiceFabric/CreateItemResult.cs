@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SoCreate.Extensions.Caching.ServiceFabric
 {
-    public class CreateItemResult
+    public sealed class CreateItemResult
     {
         public CreateItemResult(bool b, CachedItem ci)
         {
@@ -14,9 +14,9 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
             this.CachedItem = ci;
         }
 
-        public bool isConflict { get; set; }
+        public bool isConflict { get; private set; }
 
-        public CachedItem CachedItem { get; set; }
+        public CachedItem CachedItem { get; private set; }
     }
 
     class CreateItemResultSerializer : IStateSerializer<CreateItemResult>
