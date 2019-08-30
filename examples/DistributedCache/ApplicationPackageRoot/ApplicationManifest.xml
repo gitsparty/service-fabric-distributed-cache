@@ -6,6 +6,7 @@
     <Parameter Name="DistributedCacheStore_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="DistributedCacheStore_PartitionCount" DefaultValue="1" />
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ClientApp_PortNumber" DefaultValue="8080" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -13,6 +14,11 @@
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ClientAppPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
+    <ResourceOverrides>
+      <Endpoints>
+        <Endpoint Name="ServiceEndpoint" Port="[ClientApp_PortNumber]" />
+      </Endpoints>
+    </ResourceOverrides>
     <EnvironmentOverrides CodePackageRef="code">
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[ClientApp_ASPNETCORE_ENVIRONMENT]" />
     </EnvironmentOverrides>

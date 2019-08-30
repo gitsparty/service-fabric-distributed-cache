@@ -20,7 +20,7 @@
                                     AzureActiveDirectory="true"
                                     ServerCertThumbprint="0123456789012345678901234567890123456789" />
   -->
-  <ClusterConnectionParameters ConnectionEndpoint="nasdistributedcache.westus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="B3819799D76C0B6F760C9F269DF877CA1E7A18A5" FindType="FindByThumbprint" FindValue="B3819799D76C0B6F760C9F269DF877CA1E7A18A5" StoreLocation="CurrentUser" StoreName="My" />
+  <ClusterConnectionParameters ConnectionEndpoint="nasdc.westus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="8AE7097BB78BB1A8109728C8D5A7FC92D7BDAACF" FindType="FindByThumbprint" FindValue="8AE7097BB78BB1A8109728C8D5A7FC92D7BDAACF" StoreLocation="CurrentUser" StoreName="My" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
   <CopyPackageParameters CompressPackage="true" />
 </PublishProfile>

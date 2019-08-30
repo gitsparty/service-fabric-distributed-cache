@@ -108,7 +108,7 @@ namespace ClientApp.Controllers
                         return new ConflictResult();
                     }
 
-                    return Content(Encoding.UTF8.GetString(result));
+                    return Created("Created", Encoding.UTF8.GetString(result));
                 }
                 catch (Exception ex)
                 {
