@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
 namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
-    public class ServiceFabricDistributedCache : IDistributedCacheWithCreate
+    public class ServiceFabricDistributedCacheClient : IDistributedCacheWithCreate
     {
         private readonly IDistributedCacheStoreLocator _distributedCacheStoreLocator;
         private readonly ISystemClock _systemClock;
         private readonly Guid _cacheStoreId;
 
-        public ServiceFabricDistributedCache(IOptions<ServiceFabricCacheOptions> options, IDistributedCacheStoreLocator distributedCacheStoreLocator, ISystemClock systemClock)
+        public ServiceFabricDistributedCacheClient(IOptions<ServiceFabricCacheOptions> options, IDistributedCacheStoreLocator distributedCacheStoreLocator, ISystemClock systemClock)
         {
             _cacheStoreId = options.Value.CacheStoreId;
             _distributedCacheStoreLocator = distributedCacheStoreLocator;

@@ -21,7 +21,7 @@ namespace ClientApp
             return services
                 .AddSingleton<IDistributedCacheStoreLocator, DistributedCacheStoreLocator>()
                 .AddSingleton<ISystemClock, SystemClock>()
-                .AddSingleton<IDistributedCacheWithCreate, ServiceFabricDistributedCache>();
+                .AddSingleton<IDistributedCacheWithCreate, ServiceFabricDistributedCacheClient>();
         }
     }
 }
