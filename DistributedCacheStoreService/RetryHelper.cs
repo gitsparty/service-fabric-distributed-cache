@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric
 {
     static class RetryHelper
     {

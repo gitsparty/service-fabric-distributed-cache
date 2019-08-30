@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric
 {
     public interface IServiceFabricCacheStoreService : IService
     {

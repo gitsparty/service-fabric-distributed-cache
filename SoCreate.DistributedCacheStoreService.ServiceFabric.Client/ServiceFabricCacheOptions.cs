@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
     public class ServiceFabricCacheOptions : IOptions<ServiceFabricCacheOptions>
     {

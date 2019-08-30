@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric
 {
     public sealed class CachedItem
     {

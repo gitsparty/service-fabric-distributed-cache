@@ -12,9 +12,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
-    class DistributedCacheStoreLocator : IDistributedCacheStoreLocator
+    public class DistributedCacheStoreLocator : IDistributedCacheStoreLocator
     {
         private const string CacheStoreProperty = "CacheStore";
         private const string CacheStorePropertyValue = "true";

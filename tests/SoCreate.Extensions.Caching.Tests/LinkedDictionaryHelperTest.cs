@@ -1,7 +1,7 @@
 using AutoFixture.Xunit2;
 using Microsoft.ServiceFabric.Data;
 using Moq;
-using SoCreate.Extensions.Caching.ServiceFabric;
+using SoCreate.DistributedCacheStoreService.ServiceFabric;
 using System;
 using System.Collections.Generic;
 using System.Text;

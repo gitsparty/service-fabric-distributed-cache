@@ -1,5 +1,5 @@
 ﻿using System.Fabric;
-using SoCreate.Extensions.Caching.ServiceFabric;
+using SoCreate.DistributedCacheStoreService.ServiceFabric;
 
 namespace DistributedCacheStore
 {

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric
 {
-    class LinkedDictionaryHelper
+    public class LinkedDictionaryHelper
     {
         private readonly Func<string, Task<ConditionalValue<CachedItem>>> _getCacheItem;
         private readonly int _byteSizeOffset;
@@ -90,7 +90,7 @@ namespace SoCreate.Extensions.Caching.ServiceFabric
         }
     }
 
-    class LinkedDictionaryItemsChanged
+    public class LinkedDictionaryItemsChanged
     {
         public LinkedDictionaryItemsChanged(Dictionary<string, CachedItem> cachedItemsToUpdate, CacheStoreMetadata cacheStoreMetadata)
         {

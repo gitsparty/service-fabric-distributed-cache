@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "examples\Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCacheStore", "examples\Services\DistributedCacheStore\DistributedCacheStore.csproj", "{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.Extensions.Caching.ServiceFabric", "src\SoCreate.Extensions.Caching.ServiceFabric\SoCreate.Extensions.Caching.ServiceFabric.csproj", "{2CD13B96-A04B-4886-A32F-646DF237820E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.Extensions.Caching.Tests", "tests\SoCreate.Extensions.Caching.Tests\SoCreate.Extensions.Caching.Tests.csproj", "{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric", "DistributedCacheStoreService\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj", "{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.DistributedCacheStoreService.ServiceFabric.Client", "SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.DistributedCacheStoreService.ServiceFabric.Client.csproj", "{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,14 +47,6 @@ Global
 		{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}.Release|x64.ActiveCfg = Release|Any CPU
 		{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}.Release|x64.Build.0 = Release|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Debug|x64.Build.0 = Debug|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Release|x64.ActiveCfg = Release|Any CPU
-		{2CD13B96-A04B-4886-A32F-646DF237820E}.Release|x64.Build.0 = Release|Any CPU
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -61,6 +55,22 @@ Global
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Release|x64.ActiveCfg = Release|Any CPU
 		{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}.Release|x64.Build.0 = Release|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Debug|x64.Build.0 = Debug|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Release|x64.ActiveCfg = Release|Any CPU
+		{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}.Release|x64.Build.0 = Release|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Debug|x64.Build.0 = Debug|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Release|x64.ActiveCfg = Release|Any CPU
+		{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
-    interface IDistributedCacheStoreLocator
+    public interface IDistributedCacheStoreLocator
     {
         Task<IServiceFabricCacheStoreService> GetCacheStoreProxy(string cacheKey);
     }

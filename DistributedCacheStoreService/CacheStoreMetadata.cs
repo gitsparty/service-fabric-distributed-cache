@@ -1,7 +1,7 @@
 ﻿using Microsoft.ServiceFabric.Data;
 using System.IO;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric
 {
     public sealed class CacheStoreMetadata
     {

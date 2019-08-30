@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
     class CacheStoreNotFoundException : Exception
     {

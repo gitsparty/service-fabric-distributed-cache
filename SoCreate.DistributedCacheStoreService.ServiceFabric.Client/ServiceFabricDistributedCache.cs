@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
-namespace SoCreate.Extensions.Caching.ServiceFabric
+namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
 {
-    class ServiceFabricDistributedCache : IDistributedCacheWithCreate
+    public class ServiceFabricDistributedCache : IDistributedCacheWithCreate
     {
         private readonly IDistributedCacheStoreLocator _distributedCacheStoreLocator;
         private readonly ISystemClock _systemClock;

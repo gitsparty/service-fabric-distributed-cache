@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using SoCreate.Extensions.Caching.ServiceFabric;
+using SoCreate.DistributedCacheStoreService.ServiceFabric.Client;
 
 namespace ClientApp.Controllers
 {
