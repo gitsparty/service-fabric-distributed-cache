@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DistributedCacheStoreService\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj" />
+    <ProjectReference Include="..\..\src\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj" />
     <ProjectReference Include="..\..\src\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.DistributedCacheStoreService.ServiceFabric.Client.csproj" />
   </ItemGroup>
 
