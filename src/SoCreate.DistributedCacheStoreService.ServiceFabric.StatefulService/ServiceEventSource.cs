@@ -2,7 +2,7 @@
 using System.Diagnostics.Tracing;
 using System.Fabric;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
     [EventSource(Name = "MyCompany-DistributedCache-DistributedCacheStore")]
     internal sealed class ServiceEventSource : EventSource

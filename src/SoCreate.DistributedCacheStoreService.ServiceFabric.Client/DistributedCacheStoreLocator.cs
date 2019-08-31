@@ -13,7 +13,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public class DistributedCacheStoreLocator : IDistributedCacheStoreLocator
     {

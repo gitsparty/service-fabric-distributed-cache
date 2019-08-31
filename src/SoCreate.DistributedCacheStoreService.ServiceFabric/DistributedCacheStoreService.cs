@@ -10,7 +10,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric
+namespace SoCreate.ServiceFabric.DistributedCache
 {
     public abstract class DistributedCacheStoreService : StatefulService, IServiceFabricCacheStoreService
     {

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using SoCreate.DistributedCacheStoreService.ServiceFabric.Client;
+using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 
-namespace ClientApp.Controllers
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     [Route("api/[controller]")]
     [ApiController]

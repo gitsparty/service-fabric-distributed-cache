@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public interface IDistributedCacheStoreLocator
     {

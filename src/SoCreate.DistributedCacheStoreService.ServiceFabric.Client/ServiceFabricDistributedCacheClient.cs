@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
+//[assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public class ServiceFabricDistributedCacheClient : IDistributedCacheWithCreate
     {

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj" />
+    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.ServiceFabric.DistributedCache.csproj" />
   </ItemGroup>
 
 </Project>

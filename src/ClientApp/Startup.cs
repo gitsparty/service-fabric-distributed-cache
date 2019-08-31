@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ClientApp
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     public class Startup
     {

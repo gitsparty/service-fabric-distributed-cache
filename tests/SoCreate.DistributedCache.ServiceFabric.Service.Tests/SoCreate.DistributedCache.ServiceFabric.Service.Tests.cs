@@ -3,7 +3,6 @@ using Microsoft.Extensions.Internal;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
 using Moq;
-using SoCreate.DistributedCacheStoreService.ServiceFabric;
 using System;
 using System.Collections.Generic;
 using System.Fabric;
@@ -12,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
+namespace SoCreate.ServiceFabric.DistributedCache.Tests
 {
     public class DistributedCacheStoreServiceTest
     {
@@ -372,7 +371,7 @@ namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
             return inMemoryDict;
         }
 
-        class ServiceFabricDistributedCacheStoreService : SoCreate.DistributedCacheStoreService.ServiceFabric.DistributedCacheStoreService
+        class ServiceFabricDistributedCacheStoreService : SoCreate.ServiceFabric.DistributedCache.DistributedCacheStoreService
         {
             public ServiceFabricDistributedCacheStoreService(StatefulServiceContext context, IReliableStateManagerReplica2 replica, ISystemClock clock) : base(context, replica, clock, (m) => { })
             {

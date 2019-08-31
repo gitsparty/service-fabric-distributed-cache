@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
-using SoCreate.DistributedCacheStoreService.ServiceFabric.Client;
+using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 using System;
 
-namespace ClientApp
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     public static class ServiceFabricCachingServicesExtensions
     {

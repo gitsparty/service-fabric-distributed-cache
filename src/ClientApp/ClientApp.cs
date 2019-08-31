@@ -12,12 +12,12 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
 
-namespace ClientApp
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance. 
     /// </summary>
-    internal sealed class ClientApp : StatelessService
+    internal sealed class ClientApp : Microsoft.ServiceFabric.Services.Runtime.StatelessService
     {
         public ClientApp(StatelessServiceContext context)
             : base(context)

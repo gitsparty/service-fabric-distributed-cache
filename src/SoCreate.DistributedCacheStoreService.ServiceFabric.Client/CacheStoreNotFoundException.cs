@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     class CacheStoreNotFoundException : Exception
     {

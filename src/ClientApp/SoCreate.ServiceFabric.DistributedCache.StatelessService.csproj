@@ -14,10 +14,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="3.1.301" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="3.1.301" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.DistributedCacheStoreService.ServiceFabric.Client.csproj" />
+    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Fabric;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
     internal sealed partial class DistributedCacheStore : DistributedCacheStoreService
     {

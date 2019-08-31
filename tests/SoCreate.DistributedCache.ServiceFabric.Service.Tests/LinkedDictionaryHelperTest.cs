@@ -1,14 +1,13 @@
 using AutoFixture.Xunit2;
 using Microsoft.ServiceFabric.Data;
 using Moq;
-using SoCreate.DistributedCacheStoreService.ServiceFabric;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
+namespace SoCreate.ServiceFabric.DistributedCache.Tests
 {
     public class LinkedDictionaryHelperTest
     {

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
     internal static class Program
     {

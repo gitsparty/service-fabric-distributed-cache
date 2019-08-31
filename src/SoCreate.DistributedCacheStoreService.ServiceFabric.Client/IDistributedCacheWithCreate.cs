@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
+namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public interface IDistributedCacheWithCreate : IDistributedCache
     {

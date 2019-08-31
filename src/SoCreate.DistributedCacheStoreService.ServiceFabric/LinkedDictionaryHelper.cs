@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SoCreate.DistributedCacheStoreService.ServiceFabric
+namespace SoCreate.ServiceFabric.DistributedCache
 {
     public class LinkedDictionaryHelper
     {

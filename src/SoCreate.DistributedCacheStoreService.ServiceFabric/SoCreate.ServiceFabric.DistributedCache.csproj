@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>SoCreate.DistributedCacheStoreService.ServiceFabric</RootNamespace>
-    <AssemblyName>SoCreate.DistributedCacheStoreService.ServiceFabric</AssemblyName>
+    <RootNamespace>SoCreate.ServiceFabric.DistributedCache</RootNamespace>
+    <AssemblyName>SoCreate.ServiceFabric.DistributedCache</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

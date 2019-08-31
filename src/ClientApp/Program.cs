@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClientApp
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     internal static class Program
     {

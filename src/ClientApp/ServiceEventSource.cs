@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace ClientApp
+namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     [EventSource(Name = "MyCompany-DistributedCache-ClientApp")]
     internal sealed class ServiceEventSource : EventSource
