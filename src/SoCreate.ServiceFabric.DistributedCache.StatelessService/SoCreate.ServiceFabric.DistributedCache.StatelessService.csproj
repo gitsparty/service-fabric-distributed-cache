@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />
+    <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />
-    <ProjectReference Include="..\..\src\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.ServiceFabric.DistributedCache.csproj" />
+    <ProjectReference Include="..\..\src\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />
+    <ProjectReference Include="..\..\src\SoCreate.ServiceFabric.DistributedCache\SoCreate.ServiceFabric.DistributedCache.csproj" />
   </ItemGroup>
 
 </Project>
