@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClientApp\ClientApp.csproj" />
-    <ProjectReference Include="..\DistributedCacheStore\DistributedCacheStore.csproj" />
+    <ProjectReference Include="..\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

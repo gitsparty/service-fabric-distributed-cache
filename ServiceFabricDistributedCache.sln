@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCache", "src\DistributedCache\DistributedCache.sfproj", "{083FA0A4-F720-4F9E-97D1-77EB86A51F79}"
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabricDeployment", "src\ServiceFabricDeployment\ServiceFabricDeployment.sfproj", "{083FA0A4-F720-4F9E-97D1-77EB86A51F79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "src\ClientApp\ClientApp.csproj", "{0B98E889-AC0D-4772-A7E5-BDCC204F1A17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCacheStore", "src\DistributedCacheStore\DistributedCacheStore.csproj", "{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService", "src\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService.csproj", "{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.Extensions.Caching.Tests", "tests\SoCreate.Extensions.Caching.Tests\SoCreate.Extensions.Caching.Tests.csproj", "{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric", "src\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj", "{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.DistributedCacheStoreService.ServiceFabric.Client", "src\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.DistributedCacheStoreService.ServiceFabric.Client.csproj", "{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric.Client", "src\SoCreate.DistributedCacheStoreService.ServiceFabric.Client\SoCreate.DistributedCacheStoreService.ServiceFabric.Client.csproj", "{2BCE1C39-B4EF-47F4-8554-2B9AD9216E25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

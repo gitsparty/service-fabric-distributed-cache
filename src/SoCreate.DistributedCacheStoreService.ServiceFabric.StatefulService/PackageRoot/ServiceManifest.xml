@@ -14,7 +14,7 @@
   <CodePackage Name="Code" Version="1.0.0">
     <EntryPoint>
       <ExeHost>
-        <Program>DistributedCacheStore.exe</Program>
+        <Program>SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService.exe</Program>
       </ExeHost>
     </EntryPoint>
   </CodePackage>
