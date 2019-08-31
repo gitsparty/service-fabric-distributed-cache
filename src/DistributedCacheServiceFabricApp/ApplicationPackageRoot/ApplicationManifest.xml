@@ -3,17 +3,26 @@
   <Parameters>
     <Parameter Name="ClientApp_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="ClientApp_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ClientApp_PortNumber" DefaultValue="8080" />
+    <Parameter Name="ClientApp_StoreServiceUri" DefaultValue="*" />
     <Parameter Name="DistributedCacheStore_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="DistributedCacheStore_PartitionCount" DefaultValue="1" />
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="ClientApp_PortNumber" DefaultValue="8080" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.StatelessService" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="StoreConfig">
+            <Parameter Name="ClientApp_StoreServiceUri" Value="[ClientApp_StoreServiceUri]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
     <ResourceOverrides>
       <Endpoints>
         <Endpoint Name="ServiceEndpoint" Port="[ClientApp_PortNumber]" />

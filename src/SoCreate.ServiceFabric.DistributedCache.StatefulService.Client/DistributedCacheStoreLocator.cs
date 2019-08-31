@@ -20,13 +20,14 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         private const string CacheStoreProperty = "CacheStore";
         private const string CacheStorePropertyValue = "true";
         private const string ListenerName = "CacheStoreServiceListener";
-        private Uri _serviceUri;
+        private string _serviceUri;
         private readonly string _endpointName;
         private readonly FabricClient _fabricClient;
         private ServicePartitionList _partitionList;
         private readonly ConcurrentDictionary<Guid, IServiceFabricCacheStoreService> _cacheStores;
 
-        public DistributedCacheStoreLocator(IOptions<ServiceFabricCacheOptions> options)
+        public DistributedCacheStoreLocator(
+            IOptions<ServiceFabricCacheOptions> options)
         {
             var fabricOptions = options.Value;
             _serviceUri = fabricOptions.CacheStoreServiceUri;
@@ -39,7 +40,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         public async Task<IServiceFabricCacheStoreService> GetCacheStoreProxy(string cacheKey)
         {
             // Try to locate a cache store if one is not configured
-            if (_serviceUri == null)
+            if (_serviceUri == null || _serviceUri.Equals("*", StringComparison.OrdinalIgnoreCase))
             {
                 _serviceUri = await LocateCacheStoreAsync();
                 if (_serviceUri == null)
@@ -60,7 +61,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
                 });
 
                 return proxyFactory.CreateServiceProxy<IServiceFabricCacheStoreService>(
-                    _serviceUri,
+                    new Uri(_serviceUri),
                     resolvedPartition,
                     TargetReplicaSelector.Default,
                     _endpointName);
@@ -75,16 +76,14 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 
             if (_partitionList == null)
             {
-                _partitionList = await _fabricClient.QueryManager.GetPartitionListAsync(_serviceUri);
+                _partitionList = await _fabricClient.QueryManager.GetPartitionListAsync(new Uri(_serviceUri));
             }
 
             var partition = _partitionList.Single(p => ((Int64RangePartitionInformation)p.PartitionInformation).LowKey <= key && ((Int64RangePartitionInformation)p.PartitionInformation).HighKey >= key);
             return partition.PartitionInformation;
         }
 
-
-
-        private async Task<Uri> LocateCacheStoreAsync()
+        private async Task<string> LocateCacheStoreAsync()
         {
             try
             {
@@ -103,7 +102,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
                     {
                         var serviceName = await LocateCacheStoreServiceInApplicationAsync(app.ApplicationName);
                         if (serviceName != null)
-                            return serviceName;
+                            return serviceName.ToString();
                     }
                 }
             }

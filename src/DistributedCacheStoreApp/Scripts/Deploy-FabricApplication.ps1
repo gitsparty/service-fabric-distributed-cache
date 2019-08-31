@@ -74,6 +74,9 @@ Param
     [Switch]
     $DeployOnly,
 
+    [Switch]
+    $Create,
+
     [Hashtable]
     $ApplicationParameter,
 
@@ -88,7 +91,7 @@ Param
     $UseExistingClusterConnection,
 
     [String]
-    [ValidateSet('Never','Always','SameAppTypeAndVersion')]
+    [ValidateSet('Never','Always','SameAppTypeAndVersion', 'None')]
     $OverwriteBehavior = 'Never',
 
     [Switch]

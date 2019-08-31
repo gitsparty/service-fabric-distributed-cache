@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
+using System.Fabric;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
@@ -7,8 +8,29 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
     {
         public ServiceFabricCacheOptions Value => this;
 
-        public Uri CacheStoreServiceUri { get; set; }
+        public ServiceFabricCacheOptions()
+        {
+            this.CacheStoreServiceUri = "*";
+        }
+
+        public ServiceFabricCacheOptions(ServiceFabricCacheOptions input)
+        {
+            this.CacheStoreEndpointName = input.CacheStoreEndpointName;
+            this.CacheStoreId = input.CacheStoreId;
+            this.CacheStoreServiceUri = input.CacheStoreServiceUri;
+        }
+
+        public ServiceFabricCacheOptions(StatelessServiceContext context)
+        {
+            var configurationPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
+
+            CacheStoreServiceUri = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceUri"].Value;
+        }
+
+        public string CacheStoreServiceUri { get; set; }
+
         public string CacheStoreEndpointName { get; set; }
+
         public Guid CacheStoreId { get; set; }
     }
 }

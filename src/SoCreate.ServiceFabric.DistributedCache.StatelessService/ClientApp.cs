@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Fabric;
 using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
-using Microsoft.ServiceFabric.Data;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
@@ -19,9 +13,12 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
     /// </summary>
     internal sealed class ClientApp : Microsoft.ServiceFabric.Services.Runtime.StatelessService
     {
+        private string serviceUri;
+
         public ClientApp(StatelessServiceContext context)
             : base(context)
-        { }
+        {
+        }
 
         /// <summary>
         /// Optional override to create listeners (like tcp, http) for this service instance.

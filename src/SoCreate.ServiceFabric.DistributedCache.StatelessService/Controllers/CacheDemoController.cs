@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Fabric;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +15,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
     {
         private readonly IDistributedCacheWithCreate _distributedCache;
 
-        public CacheDemoController(IDistributedCacheWithCreate distributedCache)
+        public CacheDemoController(
+            IDistributedCacheWithCreate distributedCache)
         {
             _distributedCache = distributedCache;
         }
