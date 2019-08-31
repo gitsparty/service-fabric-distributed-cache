@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SoCreate.Extensions.Caching.Tests
+namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
 {
     public class LinkedDictionaryHelperTest
     {

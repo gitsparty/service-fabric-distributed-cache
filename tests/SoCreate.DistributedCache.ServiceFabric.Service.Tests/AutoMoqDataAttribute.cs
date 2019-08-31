@@ -2,7 +2,7 @@
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace SoCreate.Extensions.Caching.Tests
+namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
 {
     public class AutoMoqDataAttribute : AutoDataAttribute
     {

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp", "src\ClientApp\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService", "src\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService\SoCreate.DistributedCacheStoreService.ServiceFabric.StatefulService.csproj", "{78084B43-5F67-4F8E-BDE2-4D788A9C9B09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.Extensions.Caching.Tests", "tests\SoCreate.Extensions.Caching.Tests\SoCreate.Extensions.Caching.Tests.csproj", "{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCache.ServiceFabric.Service.Tests", "tests\SoCreate.DistributedCache.ServiceFabric.Service.Tests\SoCreate.DistributedCache.ServiceFabric.Service.Tests.csproj", "{E5B6BE91-0114-4C98-8AEA-96C5A7E5026E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.DistributedCacheStoreService.ServiceFabric", "src\SoCreate.DistributedCacheStoreService.ServiceFabric\SoCreate.DistributedCacheStoreService.ServiceFabric.csproj", "{EF6AAE7A-9A4B-47AA-AA4D-3F381478BDBA}"
 EndProject

@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SoCreate.Extensions.Caching.Tests
+namespace SoCreate.DistributedCache.ServiceFabric.Service.Tests
 {
     public class DistributedCacheStoreServiceTest
     {
