@@ -23,4 +23,7 @@
   <ClusterConnectionParameters ConnectionEndpoint="nasdc.westus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="8AE7097BB78BB1A8109728C8D5A7FC92D7BDAACF" FindType="FindByThumbprint" FindValue="8AE7097BB78BB1A8109728C8D5A7FC92D7BDAACF" StoreLocation="CurrentUser" StoreName="My" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
   <CopyPackageParameters CompressPackage="true" />
+  <UpgradeDeployment Mode="Monitored" Enabled="true">
+    <Parameters FailureAction="Rollback" Force="True" />
+  </UpgradeDeployment>
 </PublishProfile>
