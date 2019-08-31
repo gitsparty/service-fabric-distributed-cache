@@ -17,9 +17,6 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public class DistributedCacheStoreLocator : IDistributedCacheStoreLocator
     {
-        private const string CacheStoreProperty = "CacheStore";
-        private const string CacheStorePropertyValue = "true";
-        private const string ListenerName = "CacheStoreServiceListener";
         private string _serviceUri;
         private readonly string _endpointName;
         private readonly FabricClient _fabricClient;
@@ -31,7 +28,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         {
             var fabricOptions = options.Value;
             _serviceUri = fabricOptions.CacheStoreServiceUri;
-            _endpointName = fabricOptions.CacheStoreEndpointName ?? ListenerName;
+            _endpointName = fabricOptions.CacheStoreEndpointName;
                        
             _fabricClient = new FabricClient();
             _cacheStores = new ConcurrentDictionary<Guid, IServiceFabricCacheStoreService>();
@@ -128,9 +125,11 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 
                     foreach (var service in services)
                     {
-                        var found = await IsCacheStore(service.ServiceName);
+                        var found = IsCacheStore(service.ServiceName, service.ServiceTypeName);
                         if (found)
+                        {
                             return service.ServiceName;
+                        }
                     }
                 }
             }
@@ -139,12 +138,17 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             return null;
         }
 
-        private async Task<bool> IsCacheStore(Uri serviceName)
+        private bool IsCacheStore(Uri serviceName, string serviceTypeName)
         {
             try
             {
-                var isCacheStore = await _fabricClient.PropertyManager.GetPropertyAsync(serviceName, CacheStoreProperty);
-                return isCacheStore.GetValue<string>() == CacheStorePropertyValue;
+                if (this._serviceUri == null || this._serviceUri.Equals("*", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (serviceTypeName.Equals("SoCreate.ServiceFabric.DistributedCache.StatefulService"))
+                    {
+                        return true;
+                    }
+                }
             }
             catch { }
 

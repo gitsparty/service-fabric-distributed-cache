@@ -4,6 +4,6 @@
     <Parameter Name="ClientApp_PortNumber" Value="8081" />
     <Parameter Name="ClientApp_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="ClientApp_InstanceCount" Value="1" />
-    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCacheStore_A/StatefulService_A"/>
+    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCacheStore_B/StatefulService_A" />
   </Parameters>
 </Application>

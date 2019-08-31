@@ -11,6 +11,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         public ServiceFabricCacheOptions()
         {
             this.CacheStoreServiceUri = "*";
+            this.CacheStoreEndpointName = "CacheStoreServiceListener";
         }
 
         public ServiceFabricCacheOptions(ServiceFabricCacheOptions input)
@@ -20,7 +21,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             this.CacheStoreServiceUri = input.CacheStoreServiceUri;
         }
 
-        public ServiceFabricCacheOptions(StatelessServiceContext context)
+        public void Initialize(StatelessServiceContext context)
         {
             var configurationPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
 

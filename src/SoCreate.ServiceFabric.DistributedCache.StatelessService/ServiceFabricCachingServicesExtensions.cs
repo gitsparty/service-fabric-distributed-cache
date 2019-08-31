@@ -2,23 +2,22 @@
 using Microsoft.Extensions.Internal;
 using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 using System;
+using System.Fabric;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
     public static class ServiceFabricCachingServicesExtensions
     {
         public static IServiceCollection AddDistributedServiceFabricCache(
-            this IServiceCollection services,
-            Action<ServiceFabricCacheOptions> setupAction = null)
+            this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            if (setupAction == null) {
-                setupAction = (s) => { };
-            }
-
-            services.AddOptions();
-            services.Configure(setupAction);
+            services.AddOptions<ServiceFabricCacheOptions>().Configure<StatelessServiceContext>(
+                (option, context) => 
+                {
+                    option.Initialize(context);
+                });
 
             return services
                 .AddSingleton<IDistributedCacheStoreLocator, DistributedCacheStoreLocator>()
