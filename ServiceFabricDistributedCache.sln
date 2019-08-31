@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabricDeployment", "src\ServiceFabricDeployment\ServiceFabricDeployment.sfproj", "{083FA0A4-F720-4F9E-97D1-77EB86A51F79}"
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheServiceFabricApp", "src\DistributedCacheServiceFabricApp\DistributedCacheServiceFabricApp.sfproj", "{083FA0A4-F720-4F9E-97D1-77EB86A51F79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.StatelessService", "src\SoCreate.ServiceFabric.DistributedCache.StatelessService\SoCreate.ServiceFabric.DistributedCache.StatelessService.csproj", "{0B98E889-AC0D-4772-A7E5-BDCC204F1A17}"
 EndProject

@@ -20,7 +20,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
-                ServiceRuntime.RegisterServiceAsync("ClientAppType",
+                ServiceRuntime.RegisterServiceAsync(
+                    ManifestConstants.ServiceTypeName,
                     context => new ClientApp(context)).GetAwaiter().GetResult();
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(ClientApp).Name);

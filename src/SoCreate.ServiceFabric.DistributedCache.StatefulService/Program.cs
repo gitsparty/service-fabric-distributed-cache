@@ -19,10 +19,13 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
-                ServiceRuntime.RegisterServiceAsync("DistributedCacheStoreType",
+                ServiceRuntime.RegisterServiceAsync(
+                    ManifestConstants.ServiceType,
                     context => new DistributedCacheStore(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(DistributedCacheStore).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(
+                    Process.GetCurrentProcess().Id,
+                    typeof(DistributedCacheStore).Name);
 
                 // Prevents this host process from terminating so services keep running.
                 Thread.Sleep(Timeout.Infinite);
