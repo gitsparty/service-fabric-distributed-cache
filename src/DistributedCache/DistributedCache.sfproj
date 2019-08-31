@@ -32,8 +32,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Services\ClientApp\ClientApp.csproj" />
-    <ProjectReference Include="..\Services\DistributedCacheStore\DistributedCacheStore.csproj" />
+    <ProjectReference Include="..\ClientApp\ClientApp.csproj" />
+    <ProjectReference Include="..\DistributedCacheStore\DistributedCacheStore.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

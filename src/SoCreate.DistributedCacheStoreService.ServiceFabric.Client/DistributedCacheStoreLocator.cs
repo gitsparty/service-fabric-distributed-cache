@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.ServiceFabric.Services.Client;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Microsoft.ServiceFabric.Services.Communication.Client;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Client;
 using System;
 using System.Collections.Concurrent;
@@ -58,7 +59,11 @@ namespace SoCreate.DistributedCacheStoreService.ServiceFabric.Client
                     return new FabricTransportServiceRemotingClientFactory();
                 });
 
-                return proxyFactory.CreateServiceProxy<IServiceFabricCacheStoreService>(_serviceUri, resolvedPartition, Microsoft.ServiceFabric.Services.Communication.Client.TargetReplicaSelector.Default, _endpointName);
+                return proxyFactory.CreateServiceProxy<IServiceFabricCacheStoreService>(
+                    _serviceUri,
+                    resolvedPartition,
+                    TargetReplicaSelector.Default,
+                    _endpointName);
             });
         }
 
