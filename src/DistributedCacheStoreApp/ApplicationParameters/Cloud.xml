@@ -4,6 +4,7 @@
     <Parameter Name="DistributedCacheStore_PartitionCount" Value="10" />
     <Parameter Name="DistributedCacheStore_MinReplicaSetSize" Value="2" />
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" Value="3" />
-    <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" Value="3000"/>
+    <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" Value="3000" />
+    <Parameter Name="DistributedCacheStore_PlacementConstraints" Value="(NodeType == NodeType2)" />
   </Parameters>
 </Application>

@@ -5,6 +5,7 @@
     <Parameter Name="ClientApp_InstanceCount" DefaultValue="-1" />
     <Parameter Name="ClientApp_PortNumber" DefaultValue="8080" />
     <Parameter Name="ClientApp_StoreServiceUri" DefaultValue="*" />
+    <Parameter Name="ClientApp_PlacementConstraints" DefaultValue="(NodeType == NodeType0)" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -38,7 +39,7 @@
     <Service Name="StatelessService_A" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="SoCreate.ServiceFabric.DistributedCache.StatelessService" InstanceCount="[ClientApp_InstanceCount]">
         <SingletonPartition />
-        <PlacementConstraints>(NodeType == NodeType1)</PlacementConstraints>
+        <PlacementConstraints>[ClientApp_PlacementConstraints]</PlacementConstraints>
       </StatelessService>
     </Service>
   </DefaultServices>
