@@ -4,13 +4,22 @@
     <Parameter Name="DistributedCacheStore_MinReplicaSetSize" DefaultValue="2" />
     <Parameter Name="DistributedCacheStore_PartitionCount" DefaultValue="1" />
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" DefaultValue="2500"/>
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.StatefulService" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="CacheConfig">
+            <Parameter Name="MaxCacheSizeInMegabytes" Value="[DistributedCacheStore_MaxCacheSizeInMegabytes]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
   </ServiceManifestImport>
   <DefaultServices>
     <!-- The section below creates instances of service types, when an instance of this 
@@ -21,6 +30,7 @@
     <Service Name="StatefulService_A" ServicePackageActivationMode="ExclusiveProcess">
       <StatefulService ServiceTypeName="SoCreate.ServiceFabric.DistributedCache.StatefulService" TargetReplicaSetSize="[DistributedCacheStore_TargetReplicaSetSize]" MinReplicaSetSize="[DistributedCacheStore_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[DistributedCacheStore_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>(NodeType == NodeType2)</PlacementConstraints>
       </StatefulService>
     </Service>
   </DefaultServices>

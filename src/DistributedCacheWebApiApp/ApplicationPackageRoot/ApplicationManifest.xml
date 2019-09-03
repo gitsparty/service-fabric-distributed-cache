@@ -38,6 +38,7 @@
     <Service Name="StatelessService_A" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="SoCreate.ServiceFabric.DistributedCache.StatelessService" InstanceCount="[ClientApp_InstanceCount]">
         <SingletonPartition />
+        <PlacementConstraints>(NodeType == NodeType1)</PlacementConstraints>
       </StatelessService>
     </Service>
   </DefaultServices>

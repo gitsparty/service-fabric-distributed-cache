@@ -13,4 +13,7 @@
     <Parameter Name="MyParameter" Value="Value1" />
   </Section>
   -->
+  <Section Name="CacheConfig">
+    <Parameter Name="MaxCacheSizeInMegabytes" Value="2000" />
+  </Section>
 </Settings>
