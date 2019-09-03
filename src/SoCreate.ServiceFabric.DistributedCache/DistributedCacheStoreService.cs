@@ -1,76 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Internal;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
-using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public abstract class DistributedCacheStoreService : StatefulService, IServiceFabricCacheStoreService
+    public abstract class DistributedCacheStoreService : IServiceFabricCacheStoreService, IServiceFabricCacheStoreBackgroundWorker
     {
-        private const string CacheStoreProperty = "CacheStore";
-        private const string CacheStorePropertyValue = "true";
         const int BytesInMegabyte = 1048576;
         const int ByteSizeOffset = 250;
         const int DefaultCacheSizeInMegabytes = 100;
         const string CacheStoreName = "CacheStore";
         const string CacheStoreMetadataName = "CacheStoreMetadata";
         const string CacheStoreMetadataKey = "CacheStoreMetadata";
-        private const string ListenerName = "CacheStoreServiceListener";
-        private readonly Uri _serviceUri;
         private readonly IReliableStateManagerReplica2 _reliableStateManagerReplica;
         private readonly Action<string> _log;
         private readonly ISystemClock _systemClock;
-        private int _partitionCount = 1;
+        IReliableStateManager _stateManager;
 
-        public DistributedCacheStoreService(StatefulServiceContext context, Action<string> log = null)
-            : base(context)
+        public DistributedCacheStoreService(IReliableStateManager stateManager, Action<string> log = null)
         {
-            _serviceUri = context.ServiceName;
             _log = log;
             _systemClock = new SystemClock();
+            _stateManager = stateManager;
 
-            if (!StateManager.TryAddStateSerializer(new CachedItemSerializer()))
+            if (!_stateManager.TryAddStateSerializer(new CachedItemSerializer()))
             {
                 throw new InvalidOperationException("Failed to set CachedItem custom serializer");
             }
 
-            if (!StateManager.TryAddStateSerializer(new CacheStoreMetadataSerializer()))
+            if (!_stateManager.TryAddStateSerializer(new CacheStoreMetadataSerializer()))
             {
                 throw new InvalidOperationException("Failed to set CacheStoreMetadata custom serializer");
             }
 
-            if (!StateManager.TryAddStateSerializer(new CreateItemResultSerializer()))
+            if (!_stateManager.TryAddStateSerializer(new CreateItemResultSerializer()))
             {
                 throw new InvalidOperationException("Failed to set CreateItemResultSerializer custom serializer");
             }
-        }
-
-        public DistributedCacheStoreService(
-            StatefulServiceContext context,
-            IReliableStateManagerReplica2 reliableStateManagerReplica,
-            ISystemClock systemClock,
-            Action<string> log)
-            : base(context, reliableStateManagerReplica)
-        {
-            _serviceUri = context.ServiceName;
-            _reliableStateManagerReplica = reliableStateManagerReplica;
-            _log = log;
-            _systemClock = systemClock;
-        }
-
-        protected async override Task OnOpenAsync(ReplicaOpenMode openMode, CancellationToken cancellationToken)
-        {
-            var client = new FabricClient();
-            await client.PropertyManager.PutPropertyAsync(_serviceUri, CacheStoreProperty, CacheStorePropertyValue);
-            _partitionCount = (await client.QueryManager.GetPartitionListAsync(_serviceUri)).Count;
         }
 
         protected virtual int MaxCacheSizeInMegabytes { get { return DefaultCacheSizeInMegabytes; } }
@@ -85,12 +55,12 @@ namespace SoCreate.ServiceFabric.DistributedCache
                 _systemClock.UtcNow,
                 options);
 
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
-            return await RetryHelper.ExecuteWithRetry(stateManager: StateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
+            return await RetryHelper.ExecuteWithRetry(stateManager: _stateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
             {
-                _log?.Invoke($"Set cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+                _log?.Invoke($"Set cached item called with key: {key}");
 
                 Func<string, Task<ConditionalValue<CachedItem>>> getCacheItem = async (string cacheKey) => await cacheStore.TryGetValueAsync(tx, cacheKey, LockMode.Update);
                 var linkedDictionaryHelper = new LinkedDictionaryHelper(getCacheItem, ByteSizeOffset);
@@ -135,13 +105,13 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         async Task<byte[]> IDistributedCache.GetAsync(string key, CancellationToken token)
         {
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
 
             var cacheResult = await RetryHelper.ExecuteWithRetry(
-                stateManager: StateManager,
+                stateManager: _stateManager,
                 operation: async (tx, cancellationToken, state) =>
                 {
-                    _log?.Invoke($"Get cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+                    _log?.Invoke($"Get cached item called with key: {key}");
                     return await cacheStore.TryGetValueAsync(tx, key);
                 },
                 cancellationToken: token);
@@ -183,12 +153,12 @@ namespace SoCreate.ServiceFabric.DistributedCache
                 _systemClock.UtcNow,
                 options);
 
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
-            await RetryHelper.ExecuteWithRetry(stateManager: StateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
+            await RetryHelper.ExecuteWithRetry(stateManager: _stateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
             {
-                _log?.Invoke($"Set cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+                _log?.Invoke($"Set cached item called with key: {key}");
 
                 Func<string, Task<ConditionalValue<CachedItem>>> getCacheItem = async (string cacheKey) => await cacheStore.TryGetValueAsync(tx, cacheKey, LockMode.Update);
                 var linkedDictionaryHelper = new LinkedDictionaryHelper(getCacheItem, ByteSizeOffset);
@@ -231,12 +201,12 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         async Task IDistributedCache.RemoveAsync(string key, CancellationToken token)
         {
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
-            await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancellationToken, state) =>
+            await RetryHelper.ExecuteWithRetry(_stateManager, async (tx, cancellationToken, state) =>
             {
-                _log?.Invoke($"Remove cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+                _log?.Invoke($"Remove cached item called with key: {key}");
 
                 var cacheResult = await cacheStore.TryRemoveAsync(tx, key);
                 if (cacheResult.HasValue)
@@ -263,16 +233,10 @@ namespace SoCreate.ServiceFabric.DistributedCache
             return ((IDistributedCache)this).GetAsync(key, token);
         }
 
-        protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
+        async Task IServiceFabricCacheStoreBackgroundWorker.RunAsync(CancellationToken cancellationToken)
         {
-            yield return new ServiceReplicaListener(context =>
-                new FabricTransportServiceRemotingListener(context, this), ListenerName);
-        }
-
-        protected override async Task RunAsync(CancellationToken cancellationToken)
-        {
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
             while (true)
             {
@@ -283,8 +247,8 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         protected async Task RemoveLeastRecentlyUsedCacheItemWhenOverMaxCacheSize(CancellationToken cancellationToken)
         {
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-            var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
+            var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+            var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
             bool continueRemovingItems = true;
 
             while (continueRemovingItems)
@@ -292,13 +256,13 @@ namespace SoCreate.ServiceFabric.DistributedCache
                 continueRemovingItems = false;
                 cancellationToken.ThrowIfCancellationRequested();
 
-                await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancelToken, state) =>
+                await RetryHelper.ExecuteWithRetry(_stateManager, async (tx, cancelToken, state) =>
                 {
-                var metadata = await cacheStoreMetadata.TryGetValueAsync(tx, CacheStoreMetadataKey, LockMode.Update);
+                    var metadata = await cacheStoreMetadata.TryGetValueAsync(tx, CacheStoreMetadataKey, LockMode.Update);
 
-                if (metadata.HasValue)
-                {
-                    _log?.Invoke($"Size: {metadata.Value.Size}  Max Size: {GetMaxSizeInBytes()}");
+                    if (metadata.HasValue)
+                    {
+                        _log?.Invoke($"Size: {metadata.Value.Size}  Max Size: {GetMaxSizeInBytes()}");
 
                         if (metadata.Value.Size > GetMaxSizeInBytes())
                         {
