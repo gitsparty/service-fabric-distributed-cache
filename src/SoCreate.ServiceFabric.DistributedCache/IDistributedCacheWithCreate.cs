@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -9,6 +9,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
         Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
-            DistributedCacheEntryOptions options);
+            DistributedCacheEntryOptions options,
+            CancellationToken token);
     }
 }

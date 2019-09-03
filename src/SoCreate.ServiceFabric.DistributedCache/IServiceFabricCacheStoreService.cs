@@ -4,12 +4,7 @@ using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public interface IServiceFabricCacheStoreService : IService
+    public interface IServiceFabricCacheStoreService : IService, IDistributedCacheWithCreate
     {
-        Task<byte[]> CreateCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration);
-
-        Task<byte[]> GetCachedItemAsync(string key);
-        Task SetCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration);
-        Task RemoveCachedItemAsync(string key);
     }
 }

@@ -6,7 +6,12 @@ namespace SoCreate.ServiceFabric.DistributedCache
 {
     public sealed class CachedItem
     {
-        public CachedItem(byte[] value, string beforeCacheKey = null, string afterCacheKey = null, TimeSpan? slidingExpiration = null, DateTimeOffset? absoluteExpiration = null)
+        public CachedItem(
+            byte[] value,
+            string beforeCacheKey = null,
+            string afterCacheKey = null,
+            TimeSpan? slidingExpiration = null,
+            DateTimeOffset? absoluteExpiration = null)
         {
             Value = value;
             BeforeCacheKey = beforeCacheKey;

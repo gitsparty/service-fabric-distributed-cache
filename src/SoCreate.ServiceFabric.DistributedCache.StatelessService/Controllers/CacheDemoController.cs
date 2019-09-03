@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -20,20 +21,24 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         }
 
         [HttpGet("SetSlidingCacheItem")]
-        public async Task<ActionResult<string>> SetSlidingCacheItem()
+        public async Task<ActionResult<string>> SetSlidingCacheItem(CancellationToken cancellationToken)
         {
             var options = new DistributedCacheEntryOptions();
             options.SlidingExpiration = TimeSpan.FromSeconds(20);
 
-            await _distributedCacheClient.SetAsync("SlidingCacheItem", Encoding.UTF8.GetBytes(DateTime.Now.ToString()), options);
+            await _distributedCacheClient.SetAsync(
+                "SlidingCacheItem",
+                Encoding.UTF8.GetBytes(DateTime.Now.ToString()),
+                options,
+                cancellationToken);
 
             return new EmptyResult();
         }
 
         [HttpGet("GetSlidingCacheItem")]
-        public async Task<ActionResult<string>> GetSlidingCacheItem()
+        public async Task<ActionResult<string>> GetSlidingCacheItem(CancellationToken cancellationToken)
         {
-            var bytes = await _distributedCacheClient.GetAsync("SlidingCacheItem");
+            var bytes = await _distributedCacheClient.GetAsync("SlidingCacheItem", cancellationToken);
 
             if (bytes != null)
                 return Content(Encoding.UTF8.GetString(bytes));
@@ -42,20 +47,24 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         }
 
         [HttpGet("SetAbsoluteExpirationCacheItem")]
-        public async Task<ActionResult<string>> SetAbsoluteExpirationCacheItem()
+        public async Task<ActionResult<string>> SetAbsoluteExpirationCacheItem(CancellationToken cancellationToken)
         {
             var options = new DistributedCacheEntryOptions();
             options.AbsoluteExpiration = DateTime.Now.AddSeconds(20);
 
-            await _distributedCacheClient.SetAsync("AbsoluteExpirationCacheItem", Encoding.UTF8.GetBytes(DateTime.Now.ToString()), options);
+            await _distributedCacheClient.SetAsync(
+                "AbsoluteExpirationCacheItem",
+                Encoding.UTF8.GetBytes(DateTime.Now.ToString()),
+                options,
+                cancellationToken);
 
             return new EmptyResult();
         }
 
         [HttpGet("GetAbsoluteExpirationCacheItem")]
-        public async Task<ActionResult<string>> GetAbsoluteExpirationCacheItem()
+        public async Task<ActionResult<string>> GetAbsoluteExpirationCacheItem(CancellationToken cancellationToken)
         {
-            var bytes = await _distributedCacheClient.GetAsync("AbsoluteExpirationCacheItem");
+            var bytes = await _distributedCacheClient.GetAsync("AbsoluteExpirationCacheItem", cancellationToken);
 
             if (bytes != null)
                 return Content(Encoding.UTF8.GetString(bytes));
@@ -64,9 +73,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         }
 
         [HttpGet("{key}")]
-        public async Task<ActionResult<string>> Get(string key)
+        public async Task<ActionResult<string>> Get(string key, CancellationToken cancellationToken)
         {
-            var bytes = await _distributedCacheClient.GetAsync(key);
+            var bytes = await _distributedCacheClient.GetAsync(key, cancellationToken);
 
             if(bytes != null)
                 return Content(Encoding.UTF8.GetString(bytes));
@@ -75,7 +84,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         }
 
         [HttpPut("{key}")]
-        public async Task Put(string key)
+        public async Task Put(string key, CancellationToken cancellationToken)
         {
             var request = HttpContext.Request;
             using (var reader = new StreamReader(request.Body))
@@ -84,12 +93,12 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
                 
                 var options = new DistributedCacheEntryOptions();
                 options.SlidingExpiration = TimeSpan.FromDays(1);
-                await _distributedCacheClient.SetAsync(key, Encoding.UTF8.GetBytes(content), options);
+                await _distributedCacheClient.SetAsync(key, Encoding.UTF8.GetBytes(content), options, cancellationToken);
             }
         }
 
         [HttpPost("{key}")]
-        public async Task<ActionResult<string>> Post(string key)
+        public async Task<ActionResult<string>> Post(string key, CancellationToken cancellationToken)
         {
             var request = HttpContext.Request;
             using (var reader = new StreamReader(request.Body))
@@ -100,7 +109,11 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
                 options.SlidingExpiration = TimeSpan.FromDays(1);
                 try
                 {
-                    var result = await _distributedCacheClient.CreateCachedItemAsync(key, Encoding.UTF8.GetBytes(content), options);
+                    var result = await _distributedCacheClient.CreateCachedItemAsync(
+                        key,
+                        Encoding.UTF8.GetBytes(content),
+                        options,
+                        cancellationToken);
 
                     if (result == null)
                     {
@@ -117,9 +130,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         }
 
         [HttpDelete("{key}")]
-        public async Task Delete(string key)
+        public async Task Delete(string key, CancellationToken cancellationToken)
         {
-            await _distributedCacheClient.RemoveAsync(key);
+            await _distributedCacheClient.RemoveAsync(key, cancellationToken);
         }
     }
 }

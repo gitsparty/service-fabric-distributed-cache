@@ -3,7 +3,7 @@ using System.Fabric;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
-    internal sealed partial class DistributedCacheStore : DistributedCacheStoreService
+    internal sealed class DistributedCacheStore : DistributedCacheStoreService
     {
         private int _maxCacheSizeInMegaBytes = 1500;
 

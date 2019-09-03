@@ -33,8 +33,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             if (key == null) throw new ArgumentNullException(nameof(key));
 
             key = FormatCacheKey(key);
-            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
-            return await proxy.GetCachedItemAsync(key).ConfigureAwait(false);
+            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key);
+            return await proxy.GetAsync(key, token);
         }
 
         public void Refresh(string key)
@@ -59,8 +59,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             if (key == null) throw new ArgumentNullException(nameof(key));
 
             key = FormatCacheKey(key);
-            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
-            await proxy.RemoveCachedItemAsync(key).ConfigureAwait(false);
+            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key);
+            await proxy.RemoveAsync(key, token);
         }
 
         public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
@@ -68,53 +68,38 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             SetAsync(key, value, options).Wait();
         }
 
-        public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        public async Task SetAsync(
+            string key,
+            byte[] value,
+            DistributedCacheEntryOptions options,
+            CancellationToken token = default(CancellationToken))
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (value == null) throw new ArgumentNullException(nameof(value));
 
-            var absoluteExpireTime = GetAbsoluteExpiration(_systemClock.UtcNow, options);
-            ValidateOptions(options.SlidingExpiration, absoluteExpireTime);
+            SharedWithClients.ValidateAndGetAbsoluteAndSlidingExpirations(_systemClock.UtcNow, options);
 
             key = FormatCacheKey(key);
-            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
-            await proxy.SetCachedItemAsync(key, value, options.SlidingExpiration, absoluteExpireTime).ConfigureAwait(false);
+            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key);
+            await proxy.SetAsync(key, value, options, token);
         }
 
         public async Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
-            DistributedCacheEntryOptions options)
+            DistributedCacheEntryOptions options,
+            CancellationToken token)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (value == null) throw new ArgumentNullException(nameof(value));
 
-            var absoluteExpireTime = GetAbsoluteExpiration(_systemClock.UtcNow, options);
-            ValidateOptions(options.SlidingExpiration, absoluteExpireTime);
+            SharedWithClients.ValidateAndGetAbsoluteAndSlidingExpirations(_systemClock.UtcNow, options);
 
             key = FormatCacheKey(key);
-            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key).ConfigureAwait(false);
-            return await proxy.CreateCachedItemAsync(key, value, options.SlidingExpiration, absoluteExpireTime).ConfigureAwait(false);
-        }
 
-        private DateTimeOffset? GetAbsoluteExpiration(DateTimeOffset utcNow, DistributedCacheEntryOptions options)
-        {
-            var expireTime = new DateTimeOffset?();
-            if (options.AbsoluteExpirationRelativeToNow.HasValue)
-                expireTime = new DateTimeOffset?(utcNow.Add(options.AbsoluteExpirationRelativeToNow.Value));
-            else if (options.AbsoluteExpiration.HasValue)
-            {
-                if (options.AbsoluteExpiration.Value <= utcNow)
-                    throw new InvalidOperationException("The absolute expiration value must be in the future.");
-                expireTime = new DateTimeOffset?(options.AbsoluteExpiration.Value);
-            }
-            return expireTime;
-        }
+            var proxy = await _distributedCacheStoreLocator.GetCacheStoreProxy(key);
 
-        private void ValidateOptions(TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration)
-        {
-            if (!slidingExpiration.HasValue && !absoluteExpiration.HasValue)
-                throw new InvalidOperationException("Either absolute or sliding expiration needs to be provided.");
+            return await proxy.CreateCachedItemAsync(key, value, options, token);
         }
 
         private string FormatCacheKey(string key)

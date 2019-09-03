@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Internal;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
@@ -74,48 +75,20 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         protected virtual int MaxCacheSizeInMegabytes { get { return DefaultCacheSizeInMegabytes; } }
 
-        public async Task<byte[]> GetCachedItemAsync(string key)
-        {
-            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
-
-            var cacheResult = await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancellationToken, state) =>
-            {
-                _log?.Invoke($"Get cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
-                return await cacheStore.TryGetValueAsync(tx, key);
-            });
-
-            if (cacheResult.HasValue)
-            {
-                var cachedItem = cacheResult.Value;
-                var expireTime = cachedItem.AbsoluteExpiration;
-
-                // cache item not expired
-                if (_systemClock.UtcNow < expireTime)
-                {
-                    await SetCachedItemAsync(key, cachedItem.Value, cachedItem.SlidingExpiration, cachedItem.AbsoluteExpiration);
-                    return cachedItem.Value;
-                }
-            }
-
-            return null;
-        }
-
-        public async Task<byte[]> CreateCachedItemAsync(
+        async Task<byte[]> IDistributedCacheWithCreate.CreateCachedItemAsync(
             string key,
             byte[] value,
-            TimeSpan? slidingExpiration,
-            DateTimeOffset? absoluteExpiration)
+            DistributedCacheEntryOptions options,
+            CancellationToken token)
         {
-            if (slidingExpiration.HasValue)
-            {
-                var now = _systemClock.UtcNow;
-                absoluteExpiration = now.AddMilliseconds(slidingExpiration.Value.TotalMilliseconds);
-            }
+            (var absoluteExpiration, var slidingExpiration) = SharedWithClients.ValidateAndGetAbsoluteAndSlidingExpirations(
+                _systemClock.UtcNow,
+                options);
 
             var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
             var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
-            return await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancellationToken, state) =>
+            return await RetryHelper.ExecuteWithRetry(stateManager: StateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
             {
                 _log?.Invoke($"Set cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
 
@@ -154,21 +127,69 @@ namespace SoCreate.ServiceFabric.DistributedCache
             });
         }
 
-        public async Task SetCachedItemAsync(string key, byte[] value, TimeSpan? slidingExpiration, DateTimeOffset? absoluteExpiration)
+        byte[] IDistributedCache.Get(string key)
         {
-            if (slidingExpiration.HasValue)
+            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
+            throw new NotImplementedException();
+        }
+
+        async Task<byte[]> IDistributedCache.GetAsync(string key, CancellationToken token)
+        {
+            var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
+
+            var cacheResult = await RetryHelper.ExecuteWithRetry(
+                stateManager: StateManager,
+                operation: async (tx, cancellationToken, state) =>
+                {
+                    _log?.Invoke($"Get cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
+                    return await cacheStore.TryGetValueAsync(tx, key);
+                },
+                cancellationToken: token);
+
+            if (cacheResult.HasValue)
             {
-                var now = _systemClock.UtcNow;
-                absoluteExpiration = now.AddMilliseconds(slidingExpiration.Value.TotalMilliseconds);                
+                var cachedItem = cacheResult.Value;
+
+                // cache item not expired
+                if (_systemClock.UtcNow < cachedItem.AbsoluteExpiration)
+                {
+                    var option = new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpiration = cachedItem.AbsoluteExpiration,
+                        SlidingExpiration = cachedItem.SlidingExpiration
+                    };
+
+                    await ((IDistributedCache)this).SetAsync(key, cachedItem.Value, option, token);
+                    return cachedItem.Value;
+                }
             }
+
+            return null;
+        }
+
+        void IDistributedCache.Set(string key, byte[] value, DistributedCacheEntryOptions options)
+        {
+            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
+            throw new NotImplementedException();
+        }
+
+        async Task IDistributedCache.SetAsync(
+            string key,
+            byte[] value,
+            DistributedCacheEntryOptions options,
+            CancellationToken token)
+        {
+            (var absoluteExpiration, var slidingExpiration) = SharedWithClients.ValidateAndGetAbsoluteAndSlidingExpirations(
+                _systemClock.UtcNow,
+                options);
 
             var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
             var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
 
-            await RetryHelper.ExecuteWithRetry(StateManager, async (tx, cancellationToken, state) => 
+            await RetryHelper.ExecuteWithRetry(stateManager: StateManager, cancellationToken: token, operation: async (tx, cancellationToken, state) =>
             {
                 _log?.Invoke($"Set cached item called with key: {key} on partition id: {Partition?.PartitionInfo.Id}");
-           
+
                 Func<string, Task<ConditionalValue<CachedItem>>> getCacheItem = async (string cacheKey) => await cacheStore.TryGetValueAsync(tx, cacheKey, LockMode.Update);
                 var linkedDictionaryHelper = new LinkedDictionaryHelper(getCacheItem, ByteSizeOffset);
 
@@ -202,7 +223,13 @@ namespace SoCreate.ServiceFabric.DistributedCache
             });
         }
 
-        public async Task RemoveCachedItemAsync(string key)
+        void IDistributedCache.Remove(string key)
+        {
+            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
+            throw new NotImplementedException();
+        }
+
+        async Task IDistributedCache.RemoveAsync(string key, CancellationToken token)
         {
             var cacheStore = await StateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
             var cacheStoreMetadata = await StateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
@@ -223,6 +250,17 @@ namespace SoCreate.ServiceFabric.DistributedCache
                     await ApplyChanges(tx, cacheStore, cacheStoreMetadata, result);
                 }
             });
+        }
+
+        void IDistributedCache.Refresh(string key)
+        {
+            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
+            throw new NotImplementedException();
+        }
+
+        Task IDistributedCache.RefreshAsync(string key, CancellationToken token)
+        {
+            return ((IDistributedCache)this).GetAsync(key, token);
         }
 
         protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
