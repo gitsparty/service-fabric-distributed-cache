@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Fabric;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {

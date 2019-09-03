@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-//[assembly: InternalsVisibleTo("SoCreate.Extensions.Caching.Tests")]
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public class ServiceFabricDistributedCacheClient : IDistributedCacheWithCreate
@@ -15,7 +13,10 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         private readonly ISystemClock _systemClock;
         private readonly Guid _cacheStoreId;
 
-        public ServiceFabricDistributedCacheClient(IOptions<ServiceFabricCacheOptions> options, IDistributedCacheStoreLocator distributedCacheStoreLocator, ISystemClock systemClock)
+        public ServiceFabricDistributedCacheClient(
+            IOptions<ServiceFabricCacheOptions> options,
+            IDistributedCacheStoreLocator distributedCacheStoreLocator,
+            ISystemClock systemClock)
         {
             _cacheStoreId = options.Value.CacheStoreId;
             _distributedCacheStoreLocator = distributedCacheStoreLocator;
