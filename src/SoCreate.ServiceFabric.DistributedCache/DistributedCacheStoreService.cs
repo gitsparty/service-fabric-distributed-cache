@@ -17,7 +17,6 @@ namespace SoCreate.ServiceFabric.DistributedCache
         const string CacheStoreName = "CacheStore";
         const string CacheStoreMetadataName = "CacheStoreMetadata";
         const string CacheStoreMetadataKey = "CacheStoreMetadata";
-        private readonly IReliableStateManagerReplica2 _reliableStateManagerReplica;
         private readonly Action<string> _log;
         private readonly ISystemClock _systemClock;
         IReliableStateManager _stateManager;
@@ -25,12 +24,10 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         public DistributedCacheStoreService(
             IReliableStateManager stateManager,
-            IReliableStateManagerReplica2 reliableStateManagerReplica,
             ISystemClock systemClock,
             Action<string> log)
         {
             _stateManager = stateManager;
-            _reliableStateManagerReplica = reliableStateManagerReplica;
             _log = log;
             _systemClock = systemClock;
         }
