@@ -8,9 +8,10 @@ using Microsoft.ServiceFabric.Data.Collections;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public abstract class DistributedCacheStoreService : IServiceFabricCacheStoreService, IServiceFabricCacheStoreBackgroundWorker
+    public class DistributedCacheStoreService :
+        IServiceFabricCacheStoreService,
+        IServiceFabricCacheStoreBackgroundWorker
     {
-        const int BytesInMegabyte = 1048576;
         const int ByteSizeOffset = 250;
         const int DefaultCacheSizeInMegabytes = 100;
         const string CacheStoreName = "CacheStore";
@@ -20,12 +21,22 @@ namespace SoCreate.ServiceFabric.DistributedCache
         private readonly Action<string> _log;
         private readonly ISystemClock _systemClock;
         IReliableStateManager _stateManager;
+        private readonly int _maxCacheSizeInBytes;
 
-        public DistributedCacheStoreService(IReliableStateManager stateManager, Action<string> log = null)
+        public DistributedCacheStoreService(
+            IReliableStateManager stateManager,
+            int maxCacheSizeInBytes,
+            Action<string> log = null)
         {
+            if (maxCacheSizeInBytes == 0)
+            {
+                throw new ArgumentException($"Argument {nameof(maxCacheSizeInBytes)} can't be 0");
+            }
+
             _log = log;
             _systemClock = new SystemClock();
             _stateManager = stateManager;
+            _maxCacheSizeInBytes = maxCacheSizeInBytes;
 
             if (!_stateManager.TryAddStateSerializer(new CachedItemSerializer()))
             {
@@ -304,7 +315,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         private int GetMaxSizeInBytes()
         {
-            return (MaxCacheSizeInMegabytes * BytesInMegabyte) / _partitionCount;
+            return _maxCacheSizeInBytes;
         }
 
         private async Task ApplyChanges(ITransaction tx, IReliableDictionary<string, CachedItem> cachedItemStore, IReliableDictionary<string, CacheStoreMetadata> cacheStoreMetadata, LinkedDictionaryItemsChanged linkedDictionaryItemsChanged)
