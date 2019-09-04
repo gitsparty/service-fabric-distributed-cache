@@ -6,7 +6,7 @@
     <Parameter Name="ClientApp_PortNumber" DefaultValue="8080" />
     <Parameter Name="ClientApp_StoreServiceUri" DefaultValue="*" />
     <Parameter Name="ClientApp_PlacementConstraints" DefaultValue="(NodeType == NodeType0)" />
-    <Parameter Name="Common_StatefulServiceEndpointName" DefaultValue="CacheStoreServiceListener"/>
+    <Parameter Name="Common_StatefulServiceEndpointName" DefaultValue="CacheStoreServiceListener" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -18,7 +18,7 @@
         <Settings>
           <Section Name="StoreConfig">
             <Parameter Name="ServiceUri" Value="[ClientApp_StoreServiceUri]" />
-            <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]"/>
+            <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]" />
           </Section>
         </Settings>
       </ConfigOverride>
