@@ -11,7 +11,10 @@ using Rt = Microsoft.ServiceFabric.Services.Runtime;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
-    internal sealed class DistributedCacheStatefulService : Rt.StatefulService, IServiceFabricDistributedCacheService
+    internal sealed class DistributedCacheStatefulService : 
+        Rt.StatefulService,
+        IServiceFabricDistributedCacheService,
+        IDistributedCache
     {
         private readonly string ListenerName;
         private readonly Uri _serviceUri;
@@ -93,6 +96,30 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
         public Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
         {
             return _storeService.SetAsync(key, value, options, token);
+        }
+
+        public byte[] Get(string key)
+        {
+            // Let the clietn call async method and call wait on result.
+            throw new NotImplementedException();
+        }
+
+        public void Refresh(string key)
+        {
+            // Let the clietn call async method and call wait on result.
+            throw new NotImplementedException();
+        }
+
+        public void Remove(string key)
+        {
+            // Let the clietn call async method and call wait on result.
+            throw new NotImplementedException();
+        }
+
+        public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
+        {
+            // Let the clietn call async method and call wait on result.
+            throw new NotImplementedException();
         }
 
         public Task<byte[]> CreateCachedItemAsync(

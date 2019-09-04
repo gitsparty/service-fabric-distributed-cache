@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
-    public class ServiceFabricDistributedCacheClient : IDistributedCacheWithCreate
+    public class ServiceFabricDistributedCacheClient : IDistributedCacheWithCreate, IDistributedCache
     {
         private readonly IDistributedCacheStoreLocator _distributedCacheStoreLocator;
         private readonly ISystemClock _systemClock;

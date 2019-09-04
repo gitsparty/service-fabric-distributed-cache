@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
+    //
+    // Copy the definition of IDistributedCache so that it can be remoted.
+    //
     public interface IDistributedCacheWithCreate : IService
     {
         Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken));
