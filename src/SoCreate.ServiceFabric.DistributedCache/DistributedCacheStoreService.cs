@@ -25,6 +25,18 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
         public DistributedCacheStoreService(
             IReliableStateManager stateManager,
+            IReliableStateManagerReplica2 reliableStateManagerReplica,
+            ISystemClock systemClock,
+            Action<string> log)
+        {
+            _stateManager = stateManager;
+            _reliableStateManagerReplica = reliableStateManagerReplica;
+            _log = log;
+            _systemClock = systemClock;
+        }
+
+        public DistributedCacheStoreService(
+            IReliableStateManager stateManager,
             int maxCacheSizeInBytes,
             Action<string> log = null)
         {

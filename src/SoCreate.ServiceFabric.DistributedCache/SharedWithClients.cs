@@ -14,10 +14,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
 
             if (slidingExpiration.HasValue)
             {
-                if (utcNow.AddMilliseconds(options.SlidingExpiration.Value.TotalMilliseconds) > absoluteExpiration)
-                {
-                    slidingExpiration = absoluteExpiration - utcNow;
-                }
+                absoluteExpiration = utcNow.AddMilliseconds(slidingExpiration.Value.TotalMilliseconds);
             }
 
             ValidateOptions(absoluteExpiration, slidingExpiration);
