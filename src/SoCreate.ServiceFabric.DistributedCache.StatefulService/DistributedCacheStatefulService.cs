@@ -75,19 +75,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
             return _backgroundWorker.RunAsync(cancellationToken);
         }
 
-        public byte[] Get(string key)
-        {
-            return _storeService.Get(key);
-        }
-
         public Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken))
         {
             return _storeService.GetAsync(key, token);
-        }
-
-        public void Refresh(string key)
-        {
-            _storeService.Refresh(key);
         }
 
         public Task RefreshAsync(string key, CancellationToken token = default(CancellationToken))
@@ -95,19 +85,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
             return _storeService.RefreshAsync(key, token);
         }
 
-        public void Remove(string key)
-        {
-            _storeService.Remove(key);
-        }
-
         public Task RemoveAsync(string key, CancellationToken token = default(CancellationToken))
         {
             return _storeService.RemoveAsync(key, token);
-        }
-
-        public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
-        {
-            _storeService.Set(key, value, options);
         }
 
         public Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))

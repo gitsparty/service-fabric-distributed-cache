@@ -1,11 +1,20 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.ServiceFabric.Services.Remoting;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public interface IDistributedCacheWithCreate : IDistributedCache
+    public interface IDistributedCacheWithCreate : IService
     {
+        Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken));
+
+        Task RefreshAsync(string key, CancellationToken token = default(CancellationToken));
+
+        Task RemoveAsync(string key, CancellationToken token = default(CancellationToken));
+
+        Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken));
+
         Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,

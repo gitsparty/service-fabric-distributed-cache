@@ -63,8 +63,6 @@ namespace SoCreate.ServiceFabric.DistributedCache
             }
         }
 
-        protected virtual int MaxCacheSizeInMegabytes { get { return DefaultCacheSizeInMegabytes; } }
-
         async Task<byte[]> IDistributedCacheWithCreate.CreateCachedItemAsync(
             string key,
             byte[] value,
@@ -117,13 +115,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
             });
         }
 
-        byte[] IDistributedCache.Get(string key)
-        {
-            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
-            throw new NotImplementedException();
-        }
-
-        async Task<byte[]> IDistributedCache.GetAsync(string key, CancellationToken token)
+        async Task<byte[]> IDistributedCacheWithCreate.GetAsync(string key, CancellationToken token)
         {
             var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
 
@@ -149,7 +141,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
                         SlidingExpiration = cachedItem.SlidingExpiration
                     };
 
-                    await ((IDistributedCache)this).SetAsync(key, cachedItem.Value, option, token);
+                    await ((IDistributedCacheWithCreate)this).SetAsync(key, cachedItem.Value, option, token);
                     return cachedItem.Value;
                 }
             }
@@ -157,13 +149,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
             return null;
         }
 
-        void IDistributedCache.Set(string key, byte[] value, DistributedCacheEntryOptions options)
-        {
-            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
-            throw new NotImplementedException();
-        }
-
-        async Task IDistributedCache.SetAsync(
+        async Task IDistributedCacheWithCreate.SetAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options,
@@ -213,13 +199,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
             });
         }
 
-        void IDistributedCache.Remove(string key)
-        {
-            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
-            throw new NotImplementedException();
-        }
-
-        async Task IDistributedCache.RemoveAsync(string key, CancellationToken token)
+        async Task IDistributedCacheWithCreate.RemoveAsync(string key, CancellationToken token)
         {
             var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
             var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);
@@ -242,15 +222,9 @@ namespace SoCreate.ServiceFabric.DistributedCache
             });
         }
 
-        void IDistributedCache.Refresh(string key)
+        Task IDistributedCacheWithCreate.RefreshAsync(string key, CancellationToken token)
         {
-            // Don't mix async and sync implementations. The caller can call the async version and wait for result.
-            throw new NotImplementedException();
-        }
-
-        Task IDistributedCache.RefreshAsync(string key, CancellationToken token)
-        {
-            return ((IDistributedCache)this).GetAsync(key, token);
+            return ((IDistributedCacheWithCreate)this).GetAsync(key, token);
         }
 
         async Task IServiceFabricDistributedCacheStoreBackgroundWorker.RunAsync(CancellationToken cancellationToken)

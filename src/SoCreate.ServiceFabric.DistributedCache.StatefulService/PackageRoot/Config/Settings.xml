@@ -15,5 +15,6 @@
   -->
   <Section Name="CacheConfig">
     <Parameter Name="MaxCacheSizeInMegabytes" Value="2000" />
+    <Parameter Name="ServiceEndpointName" Value="" />
   </Section>
 </Settings>
