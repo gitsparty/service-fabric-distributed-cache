@@ -6,7 +6,6 @@ using Microsoft.ServiceFabric.Data.Collections;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Fabric;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
