@@ -21,7 +21,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         private readonly string _endpointName;
         private readonly FabricClient _fabricClient;
         private ServicePartitionList _partitionList;
-        private readonly ConcurrentDictionary<Guid, IServiceFabricCacheStoreService> _cacheStores;
+        private readonly ConcurrentDictionary<Guid, IServiceFabricDistributedCacheService> _cacheStores;
 
         public DistributedCacheStoreLocator(
             IOptions<ServiceFabricCacheOptions> options)
@@ -31,10 +31,10 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             _endpointName = fabricOptions.CacheStoreEndpointName;
                        
             _fabricClient = new FabricClient();
-            _cacheStores = new ConcurrentDictionary<Guid, IServiceFabricCacheStoreService>();
+            _cacheStores = new ConcurrentDictionary<Guid, IServiceFabricDistributedCacheService>();
         }
 
-        public async Task<IServiceFabricCacheStoreService> GetCacheStoreProxy(string cacheKey)
+        public async Task<IServiceFabricDistributedCacheService> GetCacheStoreProxy(string cacheKey)
         {
             // Try to locate a cache store if one is not configured
             if (_serviceUri == null || _serviceUri.Equals("*", StringComparison.OrdinalIgnoreCase))
@@ -57,7 +57,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
                     return new FabricTransportServiceRemotingClientFactory();
                 });
 
-                return proxyFactory.CreateServiceProxy<IServiceFabricCacheStoreService>(
+                return proxyFactory.CreateServiceProxy<IServiceFabricDistributedCacheService>(
                     new Uri(_serviceUri),
                     resolvedPartition,
                     TargetReplicaSelector.Default,

@@ -11,16 +11,16 @@ using Rt = Microsoft.ServiceFabric.Services.Runtime;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
-    internal sealed class DistributedCacheStore : Rt.StatefulService, IServiceFabricCacheStoreService
+    internal sealed class DistributedCacheStatefulService : Rt.StatefulService, IServiceFabricDistributedCacheService
     {
         private const string ListenerName = "CacheStoreServiceListener";
         private readonly Uri _serviceUri;
         private int _partitionCount = 1;
         private int _maxCacheSizeInMegaBytes = 1500;
-        private IServiceFabricCacheStoreService _storeService;
-        private IServiceFabricCacheStoreBackgroundWorker _backgroundWorker;
+        private IServiceFabricDistributedCacheService _storeService;
+        private IServiceFabricDistributedCacheStoreBackgroundWorker _backgroundWorker;
 
-        public DistributedCacheStore(StatefulServiceContext context)
+        public DistributedCacheStatefulService(StatefulServiceContext context)
             : base(context)
         {
             _serviceUri = context.ServiceName;
@@ -36,7 +36,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 
             ServiceEventSource.Current.ServiceMessage(context, $"Max Cache size is {_maxCacheSizeInMegaBytes}");
 
-            var svc = new DistributedCacheStoreService(
+            var svc = new DistributedCacheStore(
                 this.StateManager,
                 this.GetMaxCacheSizeInBytes(),
                 (message) => ServiceEventSource.Current.ServiceMessage(context, message));
@@ -45,22 +45,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
             _backgroundWorker = svc;
         }
 
-        /*
-        public DistributedCacheStore(
-            StatefulServiceContext context,
-            IReliableStateManagerReplica2 reliableStateManagerReplica,
-            ISystemClock systemClock,
-            Action<string> log)
-            : base(context, reliableStateManagerReplica)
-        {
-            _serviceUri = context.ServiceName;
-            _reliableStateManagerReplica = reliableStateManagerReplica;
-            _log = log;
-            _systemClock = systemClock;
-        }
-        */
-
-        protected async override Task OnOpenAsync(ReplicaOpenMode openMode, CancellationToken cancellationToken)
+        protected async override Task OnOpenAsync(
+            ReplicaOpenMode openMode,
+            CancellationToken cancellationToken)
         {
             var client = new FabricClient();
             _partitionCount = (await client.QueryManager.GetPartitionListAsync(_serviceUri)).Count;
@@ -72,8 +59,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
                 new FabricTransportServiceRemotingListener(context, this), ListenerName);
         }
 
-        protected override async Task RunAsync(CancellationToken cancellationToken)
+        protected override Task RunAsync(CancellationToken cancellationToken)
         {
+            return _backgroundWorker.RunAsync(cancellationToken);
         }
 
         public byte[] Get(string key)

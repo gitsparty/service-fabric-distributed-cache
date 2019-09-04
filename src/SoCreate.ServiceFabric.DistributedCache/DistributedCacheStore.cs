@@ -8,9 +8,9 @@ using Microsoft.ServiceFabric.Data.Collections;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public class DistributedCacheStoreService :
-        IServiceFabricCacheStoreService,
-        IServiceFabricCacheStoreBackgroundWorker
+    public class DistributedCacheStore :
+        IServiceFabricDistributedCacheService,
+        IServiceFabricDistributedCacheStoreBackgroundWorker
     {
         const int ByteSizeOffset = 250;
         const int DefaultCacheSizeInMegabytes = 100;
@@ -22,7 +22,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
         IReliableStateManager _stateManager;
         private readonly int _maxCacheSizeInBytes;
 
-        public DistributedCacheStoreService(
+        public DistributedCacheStore(
             IReliableStateManager stateManager,
             ISystemClock systemClock,
             Action<string> log)
@@ -32,7 +32,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
             _systemClock = systemClock;
         }
 
-        public DistributedCacheStoreService(
+        public DistributedCacheStore(
             IReliableStateManager stateManager,
             int maxCacheSizeInBytes,
             Action<string> log = null)
@@ -253,7 +253,7 @@ namespace SoCreate.ServiceFabric.DistributedCache
             return ((IDistributedCache)this).GetAsync(key, token);
         }
 
-        async Task IServiceFabricCacheStoreBackgroundWorker.RunAsync(CancellationToken cancellationToken)
+        async Task IServiceFabricDistributedCacheStoreBackgroundWorker.RunAsync(CancellationToken cancellationToken)
         {
             var cacheStore = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CachedItem>>(CacheStoreName);
             var cacheStoreMetadata = await _stateManager.GetOrAddAsync<IReliableDictionary<string, CacheStoreMetadata>>(CacheStoreMetadataName);

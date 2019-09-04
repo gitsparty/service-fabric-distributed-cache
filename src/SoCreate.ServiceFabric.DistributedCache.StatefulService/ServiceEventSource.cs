@@ -4,7 +4,7 @@ using System.Fabric;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
-    [EventSource(Name = "MyCompany-DistributedCache-DistributedCacheStore")]
+    [EventSource(Name = "MyCompany-DistributedCache-DistributedCacheService")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Current = new ServiceEventSource();

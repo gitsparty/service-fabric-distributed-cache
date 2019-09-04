@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public interface IServiceFabricCacheStoreBackgroundWorker
+    public interface IServiceFabricDistributedCacheStoreBackgroundWorker
     {
         Task RunAsync(CancellationToken cancellationToken);
     }

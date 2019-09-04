@@ -21,11 +21,11 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 
                 ServiceRuntime.RegisterServiceAsync(
                     ManifestConstants.ServiceType,
-                    context => new DistributedCacheStore(context)).GetAwaiter().GetResult();
+                    context => new DistributedCacheStatefulService(context)).GetAwaiter().GetResult();
 
                 ServiceEventSource.Current.ServiceTypeRegistered(
                     Process.GetCurrentProcess().Id,
-                    typeof(DistributedCacheStore).Name);
+                    typeof(DistributedCacheStatefulService).Name);
 
                 // Prevents this host process from terminating so services keep running.
                 Thread.Sleep(Timeout.Infinite);

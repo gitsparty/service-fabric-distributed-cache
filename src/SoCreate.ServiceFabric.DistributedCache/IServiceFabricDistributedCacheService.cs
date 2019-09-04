@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
-    public interface IServiceFabricCacheStoreService : IService, IDistributedCacheWithCreate
+    public interface IServiceFabricDistributedCacheService : IService, IDistributedCacheWithCreate
     {
     }
 }
