@@ -8,5 +8,6 @@
   -->
   <Section Name="StoreConfig">
     <Parameter Name="ServiceUri" Value="*" />
+    <Parameter Name="ServiceEndpointName" Value="" />
   </Section>
 </Settings>

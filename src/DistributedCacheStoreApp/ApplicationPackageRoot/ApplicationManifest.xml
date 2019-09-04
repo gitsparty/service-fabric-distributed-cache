@@ -6,6 +6,7 @@
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" DefaultValue="3" />
     <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" DefaultValue="2500" />
     <Parameter Name="DistributedCacheStore_PlacementConstraints" DefaultValue="(NodeType == NodeType0)" />
+    <Parameter Name="Common_StatefulServiceEndpointName" DefaultValue="CacheStoreServiceListener"/>
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -17,6 +18,7 @@
         <Settings>
           <Section Name="CacheConfig">
             <Parameter Name="MaxCacheSizeInMegabytes" Value="[DistributedCacheStore_MaxCacheSizeInMegabytes]" />
+            <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]"/>
           </Section>
         </Settings>
       </ConfigOverride>

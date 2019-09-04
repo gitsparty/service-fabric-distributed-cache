@@ -13,7 +13,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
 {
     internal sealed class DistributedCacheStatefulService : Rt.StatefulService, IServiceFabricDistributedCacheService
     {
-        private const string ListenerName = "CacheStoreServiceListener";
+        private readonly string ListenerName;
         private readonly Uri _serviceUri;
         private int _partitionCount = 1;
         private int _maxCacheSizeInMegaBytes = 1500;
@@ -32,6 +32,17 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
             if (!string.IsNullOrWhiteSpace(value))
             {
                 _maxCacheSizeInMegaBytes = (int)Convert.ChangeType(value, typeof(int));
+            }
+            else
+            {
+                throw new ArgumentException("Config Value has to be set", "CacheConfig.MaxCacheSizeInMegabytes");
+            }
+
+            ListenerName = configurationPackage.Settings.Sections["CacheConfig"].Parameters["ServiceEndpointName"].Value;
+
+            if (string.IsNullOrWhiteSpace(ListenerName))
+            {
+                throw new ArgumentException("Config Value has to be set", "CacheConfig.ServiceEndpointName");
             }
 
             ServiceEventSource.Current.ServiceMessage(context, $"Max Cache size is {_maxCacheSizeInMegaBytes}");

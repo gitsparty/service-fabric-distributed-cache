@@ -26,6 +26,16 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             var configurationPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
 
             CacheStoreServiceUri = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceUri"].Value;
+            if (string.IsNullOrWhiteSpace(CacheStoreServiceUri))
+            {
+                throw new ArgumentException("Config Value has to be set", "StoreConfig.ServiceUri");
+            }
+
+            CacheStoreEndpointName = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceEndpointName"].Value;
+            if (string.IsNullOrWhiteSpace(CacheStoreEndpointName))
+            {
+                throw new ArgumentException("Config Value has to be set", "StoreConfig.ServiceEndpointName");
+            }
         }
 
         public string CacheStoreServiceUri { get; set; }
