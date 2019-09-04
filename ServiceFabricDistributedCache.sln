@@ -19,6 +19,8 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheWebApiApp",
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheStoreApp", "src\DistributedCacheStoreApp\DistributedCacheStoreApp.sfproj", "{AA5AB5B4-2384-499B-8948-6889EEE685CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.Abstractions", "src\SoCreate.ServiceFabric.DistributedCache.Abstractions\SoCreate.ServiceFabric.DistributedCache.Abstractions.csproj", "{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,14 @@ Global
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.ActiveCfg = Release|x64
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.Build.0 = Release|x64
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.Deploy.0 = Release|x64
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

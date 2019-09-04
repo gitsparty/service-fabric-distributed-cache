@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {

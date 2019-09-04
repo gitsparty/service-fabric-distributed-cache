@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {

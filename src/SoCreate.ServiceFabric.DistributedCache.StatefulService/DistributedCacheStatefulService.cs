@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Fabric;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.ServiceFabric.Data;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Runtime;
 using Rt = Microsoft.ServiceFabric.Services.Runtime;
