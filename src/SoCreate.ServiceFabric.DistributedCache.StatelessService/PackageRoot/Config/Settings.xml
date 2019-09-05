@@ -9,5 +9,6 @@
   <Section Name="StoreConfig">
     <Parameter Name="ServiceUri" Value="*" />
     <Parameter Name="ServiceEndpointName" Value="" />
+    <Parameter Name="IsActorService" Value=""/>
   </Section>
 </Settings>
