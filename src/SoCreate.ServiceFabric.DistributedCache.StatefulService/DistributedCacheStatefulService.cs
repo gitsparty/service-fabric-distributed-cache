@@ -16,7 +16,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
         IServiceFabricDistributedCacheService,
         IDistributedCache
     {
-        private readonly string ListenerName;
+        private readonly string _listenerName;
         private readonly Uri _serviceUri;
         private int _partitionCount = 1;
         private int _maxCacheSizeInMegaBytes = 1500;
@@ -41,9 +41,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
                 throw new ArgumentException("Config Value has to be set", "CacheConfig.MaxCacheSizeInMegabytes");
             }
 
-            ListenerName = configurationPackage.Settings.Sections["CacheConfig"].Parameters["ServiceEndpointName"].Value;
+            _listenerName = configurationPackage.Settings.Sections["CacheConfig"].Parameters["ServiceEndpointName"].Value;
 
-            if (string.IsNullOrWhiteSpace(ListenerName))
+            if (string.IsNullOrWhiteSpace(_listenerName))
             {
                 throw new ArgumentException("Config Value has to be set", "CacheConfig.ServiceEndpointName");
             }
@@ -70,7 +70,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService
         protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
         {
             yield return new ServiceReplicaListener(context =>
-                new FabricTransportServiceRemotingListener(context, this), ListenerName);
+                new FabricTransportServiceRemotingListener(context, this), _listenerName);
         }
 
         protected override Task RunAsync(CancellationToken cancellationToken)
