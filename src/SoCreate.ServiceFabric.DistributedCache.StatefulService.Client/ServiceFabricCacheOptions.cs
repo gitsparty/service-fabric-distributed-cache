@@ -6,6 +6,14 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {
     public class ServiceFabricCacheOptions : IOptions<ServiceFabricCacheOptions>
     {
+        public string CacheStoreServiceUri { get; set; }
+
+        public string CacheStoreEndpointName { get; set; }
+
+        public Guid CacheStoreId { get; set; }
+
+        public bool IsActorService { get; set; }
+
         public ServiceFabricCacheOptions Value => this;
 
         public ServiceFabricCacheOptions()
@@ -36,12 +44,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             {
                 throw new ArgumentException("Config Value has to be set", "StoreConfig.ServiceEndpointName");
             }
+
+            var val = configurationPackage.Settings.Sections["StoreConfig"].Parameters["IsActorService"].Value;
+            IsActorService = (bool)Convert.ChangeType(val, typeof(bool));
         }
-
-        public string CacheStoreServiceUri { get; set; }
-
-        public string CacheStoreEndpointName { get; set; }
-
-        public Guid CacheStoreId { get; set; }
     }
 }

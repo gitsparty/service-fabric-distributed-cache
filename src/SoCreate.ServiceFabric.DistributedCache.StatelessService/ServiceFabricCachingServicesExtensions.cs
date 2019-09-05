@@ -23,7 +23,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
             return services
                 .AddSingleton<IDistributedCacheStoreLocator, DistributedCacheStoreLocator>()
                 .AddSingleton<ISystemClock, SystemClock>()
-                .AddSingleton<IDistributedCacheWithCreate, ServiceFabricDistributedCacheClient>();
+                .AddSingleton<IDistributedCacheWithCreate, DistributedCacheClient>();
         }
     }
 }
