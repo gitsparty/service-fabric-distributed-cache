@@ -38,7 +38,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.ActorServiceCache
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
-        protected override Task OnActivateAsync()
+        protected override async Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
@@ -47,7 +47,7 @@ namespace SoCreate.ServiceFabric.DistributedCache.ActorServiceCache
             // Any serializable object can be saved in the StateManager.
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
 
-            return this.StateManager.TryAddStateAsync<byte[]>(ValueKey, null);
+            await base.OnActivateAsync();
         }
 
         public async Task<byte[]> GetAsync(

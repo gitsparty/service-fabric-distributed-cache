@@ -27,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.Dist
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheStoreUsingActorService", "src\DistributedCacheStoreUsingActorService\DistributedCacheStoreUsingActorService.sfproj", "{E7D9CBD8-CBC2-46ED-BB0F-DF5BCF284483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.csproj", "{B49EE2F8-C106-43E2-94D0-B7DEC612054E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.csproj", "{B49EE2F8-C106-43E2-94D0-B7DEC612054E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces.csproj", "{D422A12E-3F90-4059-A29F-DD0778B96977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces.csproj", "{D422A12E-3F90-4059-A29F-DD0778B96977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client.csproj", "{39751F8E-BEB6-4858-BF79-82CC4C28D142}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +153,14 @@ Global
 		{D422A12E-3F90-4059-A29F-DD0778B96977}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D422A12E-3F90-4059-A29F-DD0778B96977}.Release|x64.ActiveCfg = Release|Any CPU
 		{D422A12E-3F90-4059-A29F-DD0778B96977}.Release|x64.Build.0 = Release|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Debug|x64.Build.0 = Debug|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Release|x64.ActiveCfg = Release|Any CPU
+		{39751F8E-BEB6-4858-BF79-82CC4C28D142}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
