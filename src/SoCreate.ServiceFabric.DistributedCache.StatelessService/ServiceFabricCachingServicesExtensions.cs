@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 using System;
 using System.Fabric;

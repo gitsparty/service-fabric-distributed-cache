@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 
 namespace SoCreate.ServiceFabric.DistributedCache.Tests
 {

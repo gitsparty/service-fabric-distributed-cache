@@ -1,6 +1,4 @@
-﻿using Microsoft.ServiceFabric.Services.Remoting;
-
-namespace SoCreate.ServiceFabric.DistributedCache
+﻿namespace SoCreate.ServiceFabric.DistributedCache.Abstractions
 {
     public interface IServiceFabricDistributedCacheService : IDistributedCacheWithCreate
     {

@@ -19,6 +19,12 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheWebApiApp",
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheStoreApp", "src\DistributedCacheStoreApp\DistributedCacheStoreApp.sfproj", "{AA5AB5B4-2384-499B-8948-6889EEE685CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.Abstractions", "src\SoCreate.ServiceFabric.DistributedCache.Abstractions\SoCreate.ServiceFabric.DistributedCache.Abstractions.csproj", "{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}"
+EndProject
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheUsingReliableCollections", "src\DistributedCacheUsingReliableCollections\DistributedCacheUsingReliableCollections.sfproj", "{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ReliableCollections", "src\SoCreate.ServiceFabric.DistributedCache.ReliableCollections\SoCreate.ServiceFabric.DistributedCache.ReliableCollections.csproj", "{9EE75563-8DCC-452B-A051-66EEE4B2958F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +97,30 @@ Global
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.ActiveCfg = Release|x64
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.Build.0 = Release|x64
 		{AA5AB5B4-2384-499B-8948-6889EEE685CD}.Release|x64.Deploy.0 = Release|x64
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB575B8D-C833-4A9F-B5A6-A0F74BDD2AF1}.Release|x64.Build.0 = Release|Any CPU
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Debug|x64.ActiveCfg = Debug|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Debug|x64.Build.0 = Debug|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Debug|x64.Deploy.0 = Debug|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Release|Any CPU.ActiveCfg = Release|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Release|x64.ActiveCfg = Release|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Release|x64.Build.0 = Release|x64
+		{BA723B9F-6DE4-4DB6-B46F-D61CB69A5827}.Release|x64.Deploy.0 = Release|x64
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Debug|x64.Build.0 = Debug|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Release|x64.ActiveCfg = Release|Any CPU
+		{9EE75563-8DCC-452B-A051-66EEE4B2958F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

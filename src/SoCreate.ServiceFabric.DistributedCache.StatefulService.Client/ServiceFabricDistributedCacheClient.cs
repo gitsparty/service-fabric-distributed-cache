@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 {

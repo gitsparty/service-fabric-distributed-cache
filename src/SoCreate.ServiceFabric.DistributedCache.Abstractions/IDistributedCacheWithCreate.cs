@@ -3,7 +3,7 @@ using Microsoft.ServiceFabric.Services.Remoting;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Threading.Tasks;
 
-namespace SoCreate.ServiceFabric.DistributedCache
+namespace SoCreate.ServiceFabric.DistributedCache.Abstractions
 {
     //
     // Copy the definition of IDistributedCache so that it can be remoted.

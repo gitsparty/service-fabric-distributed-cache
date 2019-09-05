@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Internal;
 using Microsoft.ServiceFabric.Data;
 using Microsoft.ServiceFabric.Data.Collections;
+using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 
 namespace SoCreate.ServiceFabric.DistributedCache
 {
