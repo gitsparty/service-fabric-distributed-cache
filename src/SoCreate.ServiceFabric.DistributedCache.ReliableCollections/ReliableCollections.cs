@@ -58,7 +58,6 @@ namespace SoCreate.ServiceFabric.DistributedCache.ReliableCollections
             using (var tx = this.StateManager.CreateTransaction())
             {
                 var val = await cache.TryGetValueAsync(tx, key, timeout: TimeSpan.FromSeconds(4), cancellationToken: token);
-                var val2 = await cache2.TryGetValueAsync(tx, key, timeout: TimeSpan.FromSeconds(4), cancellationToken: token);
                 return val.Value;
             }
         }
@@ -99,19 +98,11 @@ namespace SoCreate.ServiceFabric.DistributedCache.ReliableCollections
             CancellationToken token)
         {
             var cache = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, byte[]>>(cacheName);
-            var cache2 = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, bool>>("Test");
 
             using (var tx = this.StateManager.CreateTransaction())
             {
                 try
                 {
-                    var added2 = await cache2.TryAddAsync(
-                        tx,
-                        key,
-                        true,
-                        timeout: TimeSpan.FromSeconds(4),
-                        cancellationToken: token);
-
                     var added = await cache.TryAddAsync(
                         tx,
                         key,
