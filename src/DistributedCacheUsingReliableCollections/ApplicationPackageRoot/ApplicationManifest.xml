@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="DistributedCacheUsingReliableCollectionsType" ApplicationTypeVersion="1.0.9" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="DistributedCacheUsingReliableCollectionsType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="ReliableCollectionsStore_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ReliableCollectionsStore_PartitionCount" DefaultValue="1" />
@@ -11,7 +11,7 @@
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.ReliableCollectionsPkg" ServiceManifestVersion="1.0.6" />
+    <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.ReliableCollectionsPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
       <ConfigOverride Name="Config">
         <Settings>

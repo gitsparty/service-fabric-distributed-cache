@@ -10,7 +10,7 @@
             <ReplicatorConfigSection Name="ActorServiceCacheActorServiceReplicatorConfig" />
             <ReplicatorSecurityConfigSection Name="ActorServiceCacheActorServiceReplicatorSecurityConfig" />
             <StoreConfigSection Name="ActorServiceCacheActorServiceLocalStoreConfig" />
-            <ServiceEndpointV2 Name="ActorServiceCacheActorServiceEndpointV2" />
+            <ServiceEndpoint Name="ActorServiceCacheActorServiceEndpoint" />
           </GeneratedNames>
         </Extension>
       </Extensions>
@@ -26,9 +26,8 @@
   <ConfigPackage Name="Config" Version="1.0.0" />
   <Resources>
     <Endpoints>
-      <Endpoint Name="ActorServiceCacheActorServiceEndpointV2_1" />
       <Endpoint Name="ActorServiceCacheActorServiceReplicatorEndpoint" />
-      <Endpoint Name="ActorServiceCacheActorServiceEndpointV2" />
+      <Endpoint Name="ActorServiceCacheActorServiceEndpoint" />
     </Endpoints>
   </Resources>
   <!-- The content will be generated during build -->
