@@ -50,47 +50,15 @@ namespace SoCreate.ServiceFabric.DistributedCache.ReliableCollections
                 new FabricTransportServiceRemotingListener(context, this), _listenerName);
         }
 
-        /// <summary>
-        /// This is the main entry point for your service replica.
-        /// This method executes when this replica of your service becomes primary and has write status.
-        /// </summary>
-        /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service replica.</param>
-        protected override async Task RunAsync(CancellationToken cancellationToken)
-        {
-            // TODO: Replace the following sample code with your own logic 
-            //       or remove this RunAsync override if it's not needed in your service.
-
-            var myDictionary = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, long>>("myDictionary");
-
-            while (true)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                using (var tx = this.StateManager.CreateTransaction())
-                {
-                    var result = await myDictionary.TryGetValueAsync(tx, "Counter");
-
-                    ServiceEventSource.Current.ServiceMessage(this.Context, "Current Counter Value: {0}",
-                        result.HasValue ? result.Value.ToString() : "Value does not exist.");
-
-                    await myDictionary.AddOrUpdateAsync(tx, "Counter", 0, (key, value) => ++value);
-
-                    // If an exception is thrown before calling CommitAsync, the transaction aborts, all changes are 
-                    // discarded, and nothing is saved to the secondary replicas.
-                    await tx.CommitAsync();
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
-            }
-        }
-
         public async Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken))
         {
             var cache = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, byte[]>>(cacheName);
+            var cache2 = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, bool>>("Test");
 
             using (var tx = this.StateManager.CreateTransaction())
             {
                 var val = await cache.TryGetValueAsync(tx, key, timeout: TimeSpan.FromSeconds(4), cancellationToken: token);
+                var val2 = await cache2.TryGetValueAsync(tx, key, timeout: TimeSpan.FromSeconds(4), cancellationToken: token);
                 return val.Value;
             }
         }
@@ -110,7 +78,11 @@ namespace SoCreate.ServiceFabric.DistributedCache.ReliableCollections
             }
         }
 
-        public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        public async Task SetAsync(
+            string key,
+            byte[] value,
+            DistributedCacheEntryOptions options,
+            CancellationToken token = default(CancellationToken))
         {
             var cache = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, byte[]>>(cacheName);
 
@@ -127,16 +99,29 @@ namespace SoCreate.ServiceFabric.DistributedCache.ReliableCollections
             CancellationToken token)
         {
             var cache = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, byte[]>>(cacheName);
+            var cache2 = await this.StateManager.GetOrAddAsync<IReliableDictionary<string, bool>>("Test");
 
             using (var tx = this.StateManager.CreateTransaction())
             {
                 try
                 {
-                    var added = await cache.TryAddAsync(tx, key, value, timeout: TimeSpan.FromSeconds(4), cancellationToken: token);
+                    var added2 = await cache2.TryAddAsync(
+                        tx,
+                        key,
+                        true,
+                        timeout: TimeSpan.FromSeconds(4),
+                        cancellationToken: token);
+
+                    var added = await cache.TryAddAsync(
+                        tx,
+                        key,
+                        value,
+                        timeout: TimeSpan.FromSeconds(4),
+                        cancellationToken: token);
 
                     if (added)
                     {
-                        await cache.AddAsync(tx, key, value);
+                        await tx.CommitAsync();
                         return value;
                     }
                     else
