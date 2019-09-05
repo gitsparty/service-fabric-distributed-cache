@@ -22,6 +22,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.ActorServiceCache
     [StatePersistence(StatePersistence.Volatile)]
     internal class ActorServiceCache : Actor, IActorServiceCache
     {
+        private const string ValueKey = "valuekey";
+
         /// <summary>
         /// Initializes a new instance of ActorServiceCache
         /// </summary>
@@ -45,46 +47,50 @@ namespace SoCreate.ServiceFabric.DistributedCache.ActorServiceCache
             // Any serializable object can be saved in the StateManager.
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
 
-            return this.StateManager.TryAddStateAsync("count", 0);
+            return this.StateManager.TryAddStateAsync<byte[]>(ValueKey, null);
         }
 
-        public Task<byte[]> GetAsync(
+        public async Task<byte[]> GetAsync(
             string key,
             CancellationToken token = default(CancellationToken))
         {
-            return null;
+            var v = await this.StateManager.TryGetStateAsync<byte[]>(ValueKey, token);
+
+            return v.Value;
         }
 
         public Task RefreshAsync(
             string key,
             CancellationToken token = default(CancellationToken))
         {
-            return null;
+            return this.GetAsync(key, token);
         }
 
-        public Task RemoveAsync(
+        public async Task RemoveAsync(
             string key,
             CancellationToken token = default(CancellationToken))
         {
-            return null;
+            await this.StateManager.TryRemoveStateAsync(ValueKey, token);
         }
 
-        public Task SetAsync(
+        public async Task SetAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options,
             CancellationToken token = default(CancellationToken))
         {
-            return null;
+            await this.StateManager.SetStateAsync(ValueKey, value, token);
         }
 
-        public Task<byte[]> CreateCachedItemAsync(
+        public async Task<byte[]> CreateCachedItemAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options,
             CancellationToken token)
         {
-            return null;
+            await this.StateManager.AddStateAsync(ValueKey, value, token);
+
+            return value;
         }
     }
 }
