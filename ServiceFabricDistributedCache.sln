@@ -25,11 +25,11 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheUsingReliab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.ReliableCollections", "src\SoCreate.ServiceFabric.DistributedCache.ReliableCollections\SoCreate.ServiceFabric.DistributedCache.ReliableCollections.csproj", "{9EE75563-8DCC-452B-A051-66EEE4B2958F}"
 EndProject
-Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheStoreUsingActorService", "DistributedCacheStoreUsingActorService\DistributedCacheStoreUsingActorService.sfproj", "{E7D9CBD8-CBC2-46ED-BB0F-DF5BCF284483}"
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DistributedCacheStoreUsingActorService", "src\DistributedCacheStoreUsingActorService\DistributedCacheStoreUsingActorService.sfproj", "{E7D9CBD8-CBC2-46ED-BB0F-DF5BCF284483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache", "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.csproj", "{B49EE2F8-C106-43E2-94D0-B7DEC612054E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.csproj", "{B49EE2F8-C106-43E2-94D0-B7DEC612054E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces", "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces.csproj", "{D422A12E-3F90-4059-A29F-DD0778B96977}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces", "src\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Interfaces.csproj", "{D422A12E-3F90-4059-A29F-DD0778B96977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
