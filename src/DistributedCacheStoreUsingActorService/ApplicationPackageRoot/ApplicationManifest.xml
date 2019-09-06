@@ -4,6 +4,7 @@
     <Parameter Name="ActorServiceCacheActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="ActorServiceCacheActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ActorServiceCacheActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ActorServiceCacheActorService_PlacementConstraints" DefaultValue="(NodeType == NodeType0)"/>
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -15,6 +16,7 @@
     <Service Name="ActorServiceCacheActorService" GeneratedIdRef="742b17b7-19f4-4ac9-8cee-35128ed2fb36|Volatile">
       <StatefulService ServiceTypeName="ActorServiceCacheActorServiceType" TargetReplicaSetSize="[ActorServiceCacheActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ActorServiceCacheActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ActorServiceCacheActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ActorServiceCacheActorService_PlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
     <!-- The section below creates instances of service types, when an instance of this 
