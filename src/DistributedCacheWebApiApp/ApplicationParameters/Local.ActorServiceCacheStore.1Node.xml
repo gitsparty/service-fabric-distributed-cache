@@ -4,7 +4,7 @@
     <Parameter Name="ClientApp_PortNumber" Value="8081" />
     <Parameter Name="ClientApp_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="ClientApp_InstanceCount" Value="1" />
-    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCacheUsingReliableCollections_A/SoCreate.ServiceFabric.DistributedCache.ReliableCollections" />
+    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCacheStoreUsingActorServiceApp_A/ActorServiceCacheActorService" />
     <Parameter Name="ClientApp_IsActorService" Value="true" />
   </Parameters>
 </Application>
