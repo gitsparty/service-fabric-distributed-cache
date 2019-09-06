@@ -1,0 +1,3 @@
+[submodule "tools/AzureServiceFabricTools"]
+	path = tools/AzureServiceFabricTools
+	url = https://github.com/gitsparty/AzureServiceFabricTools.git
