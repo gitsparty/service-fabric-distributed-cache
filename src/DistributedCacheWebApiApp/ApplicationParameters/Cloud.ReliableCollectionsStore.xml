@@ -3,7 +3,7 @@
   <Parameters>
     <Parameter Name="ClientApp_PortNumber" Value="80" />
     <Parameter Name="ClientApp_InstanceCount" Value="-1" />
-    <Parameter Name="ClientApp_PlacementConstraints" Value="(NodeType == NodeType1)" />
+    <Parameter Name="ClientApp_PlacementConstraints" Value="(NodeType == NodeType4)" />
     <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCacheUsingReliableCollections_A/SoCreate.ServiceFabric.DistributedCache.ReliableCollections" />
   </Parameters>
 </Application>
