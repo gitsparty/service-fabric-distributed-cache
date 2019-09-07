@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 using SoCreate.ServiceFabric.DistributedCache.StatefulService.Client;
 using SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client;
+using SoCreate.ServiceFabric.DistributedCache.Redis.Client;
 
 namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
 {
@@ -24,9 +25,16 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
             {
                 _resolvedClient = new ActorServiceCacheClient(options.Value.CacheStoreServiceUri);
             }
+            else if (!string.IsNullOrWhiteSpace(options.Value.RedisConectionString))
+            {
+                _resolvedClient = new RedisClient(options.Value.RedisConectionString);
+            }
             else
             {
-                _resolvedClient = new ServiceFabricDistributedCacheClient(options, distributedCacheStoreLocator, systemClock);
+                _resolvedClient = new ServiceFabricDistributedCacheClient(
+                    options,
+                    distributedCacheStoreLocator,
+                    systemClock);
             }
         }
 

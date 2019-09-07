@@ -16,6 +16,8 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
 
         public ServiceFabricCacheOptions Value => this;
 
+        public string RedisConectionString { get; set; }
+
         public ServiceFabricCacheOptions()
         {
             this.CacheStoreServiceUri = "*";
@@ -34,16 +36,10 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
             var configurationPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
 
             CacheStoreServiceUri = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceUri"].Value;
-            if (string.IsNullOrWhiteSpace(CacheStoreServiceUri))
-            {
-                throw new ArgumentException("Config Value has to be set", "StoreConfig.ServiceUri");
-            }
 
             CacheStoreEndpointName = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceEndpointName"].Value;
-            if (string.IsNullOrWhiteSpace(CacheStoreEndpointName))
-            {
-                throw new ArgumentException("Config Value has to be set", "StoreConfig.ServiceEndpointName");
-            }
+
+            RedisConectionString = configurationPackage.Settings.Sections["StoreConfig"].Parameters["RedisConectionString"].Value;
 
             var val = configurationPackage.Settings.Sections["StoreConfig"].Parameters["IsActorService"].Value;
             IsActorService = (bool)Convert.ChangeType(val, typeof(bool));

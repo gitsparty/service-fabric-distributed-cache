@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SoCreate.ServiceFabric.DistributedCache.Redis.Client\SoCreate.ServiceFabric.DistributedCache.Redis.Client.csproj" />
     <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.Abstractions\SoCreate.ServiceFabric.DistributedCache.Abstractions.csproj" />
     <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client\SoCreate.ServiceFabric.DistributedCache.ActorServiceCache.Client.csproj" />
     <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client\SoCreate.ServiceFabric.DistributedCache.StatefulService.Client.csproj" />

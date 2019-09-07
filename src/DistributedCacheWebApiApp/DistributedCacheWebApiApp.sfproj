@@ -20,8 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ApplicationPackageRoot\ApplicationManifest.xml" />
+    <None Include="ApplicationParameters\Cloud.RedisCacheStore.xml" />
     <None Include="ApplicationParameters\Cloud.ActorServiceCacheStore.xml" />
-    <None Include="ApplicationParameters\Cloud.ReliableCollectionsStore..xml" />
+    <None Include="ApplicationParameters\Cloud.ReliableCollectionsStore.xml" />
     <None Include="ApplicationParameters\Cloud.xml" />
     <None Include="ApplicationParameters\Local.ActorServiceCacheStore.1Node.xml" />
     <None Include="ApplicationParameters\Local.ReliableCollectionsStore.1Node.xml" />
@@ -36,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="PublishProfiles\Cloud.RedisCacheStore.xml" />
+    <Content Include="PublishProfiles\Cloud.ActorServiceCacheStore.xml" />
+    <Content Include="PublishProfiles\Cloud.ReliableCollectionsStore.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.StatelessService\SoCreate.ServiceFabric.DistributedCache.StatelessService.csproj" />
