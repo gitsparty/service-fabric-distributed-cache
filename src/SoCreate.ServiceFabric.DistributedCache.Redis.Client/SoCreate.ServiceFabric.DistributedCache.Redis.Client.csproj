@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\SoCreate.ServiceFabric.DistributedCache.Abstractions\SoCreate.ServiceFabric.DistributedCache.Abstractions.csproj" />
+    <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.Abstractions\SoCreate.ServiceFabric.DistributedCache.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

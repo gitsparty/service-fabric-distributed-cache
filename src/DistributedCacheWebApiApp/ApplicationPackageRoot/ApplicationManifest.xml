@@ -8,7 +8,7 @@
     <Parameter Name="ClientApp_IsActorService" DefaultValue="false" />
     <Parameter Name="ClientApp_PlacementConstraints" DefaultValue="(NodeType == NodeType0)" />
     <Parameter Name="Common_StatefulServiceEndpointName" DefaultValue="CacheStoreServiceListener" />
-    <Parameter Name="ClientApp_RedisConnectionString" DefaultValue=""/>
+    <Parameter Name="ClientApp_RedisConnectionString" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -22,7 +22,7 @@
             <Parameter Name="ServiceUri" Value="[ClientApp_StoreServiceUri]" />
             <Parameter Name="IsActorService" Value="[ClientApp_IsActorService]" />
             <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]" />
-            <Parameter Name="RedisConnectionString" Value="[ClientApp_RedisConnectionString]"/>
+            <Parameter Name="RedisConnectionString" Value="[ClientApp_RedisConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>

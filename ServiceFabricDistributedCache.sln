@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadTest", "LoadTest\LoadTest.csproj", "{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoCreate.ServiceFabric.DistributedCache.Redis.Client", "SoCreate.ServiceFabric.DistributedCache.Redis.Client\SoCreate.ServiceFabric.DistributedCache.Redis.Client.csproj", "{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.Redis.Client", "src\SoCreate.ServiceFabric.DistributedCache.Redis.Client\SoCreate.ServiceFabric.DistributedCache.Redis.Client.csproj", "{A30D67CC-959F-42D7-A3AF-52CF62E93219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,14 +179,14 @@ Global
 		{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}.Release|x64.ActiveCfg = Release|Any CPU
 		{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}.Release|x64.Build.0 = Release|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Debug|x64.Build.0 = Debug|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Release|x64.ActiveCfg = Release|Any CPU
-		{2B9B9C23-FEED-433B-A89E-5548D1DDE1A8}.Release|x64.Build.0 = Release|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Debug|x64.Build.0 = Debug|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Release|x64.ActiveCfg = Release|Any CPU
+		{A30D67CC-959F-42D7-A3AF-52CF62E93219}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
