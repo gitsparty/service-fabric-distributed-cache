@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using SoCreate.ServiceFabric.DistributedCache.Abstractions;
 using Microsoft.Extensions.Caching.Distributed;
@@ -9,16 +10,18 @@ namespace SoCreate.ServiceFabric.DistributedCache.Redis.Client
 {
     public class RedisClient : IDistributedCacheWithCreate
     {
+        private string _connectionString;
         private ConnectionMultiplexer _mux;
-        
+
         public RedisClient(string connectionString)
         {
-            var _mux = ConnectionMultiplexer.ConnectAsync(connectionString);
+            _connectionString = connectionString;
+            _mux = ConnectionMultiplexer.ConnectAsync(connectionString).Result;
         }
 
         public async Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken))
         {
-            return System.Convert.FromBase64String(await _mux.GetDatabase().StringGetAsync(key));
+            return await _mux.GetDatabase().StringGetAsync(key);
         }
 
         public Task RefreshAsync(string key, CancellationToken token = default(CancellationToken))
@@ -26,18 +29,22 @@ namespace SoCreate.ServiceFabric.DistributedCache.Redis.Client
             return this.GetAsync(key, token);
         }
 
-        public Task RemoveAsync(string key, CancellationToken token = default(CancellationToken))
+        public async Task RemoveAsync(string key, CancellationToken token = default(CancellationToken))
         {
-            return _mux.GetDatabase().KeyDeleteAsync(key);
+            var mux = await InitializeAsync();
+
+            await mux.GetDatabase().KeyDeleteAsync(key);
         }
 
-        public Task SetAsync(
+        public async Task SetAsync(
             string key,
             byte[] value,
             DistributedCacheEntryOptions options,
             CancellationToken token = default(CancellationToken))
         {
-            return _mux.GetDatabase().StringSetAsync(key, value, when: When.Exists);
+            var mux = await InitializeAsync();
+
+            await mux.GetDatabase().StringSetAsync(key, value, when: When.Exists);
         }
 
         public async Task<byte[]> CreateCachedItemAsync(
@@ -46,9 +53,33 @@ namespace SoCreate.ServiceFabric.DistributedCache.Redis.Client
             DistributedCacheEntryOptions options,
             CancellationToken token)
         {
-            var ret = await _mux.GetDatabase().StringSetAsync(key, value, when: When.NotExists);
+            var mux = await InitializeAsync();
+
+            var ret = await mux.GetDatabase().StringSetAsync(key, value, when: When.NotExists);
 
             return ret ? value : null;
+        }
+
+        private Task<ConnectionMultiplexer> InitializeAsync()
+        {
+            if (_mux == null)
+            {
+                lock (_mux)
+                {
+                    if (_mux == null)
+                    {
+                        return ConnectionMultiplexer.ConnectAsync(_connectionString);
+                    }
+                    else
+                    {
+                        return Task.FromResult(_mux);
+                    }
+                }
+            }
+            else
+            {
+                return Task.FromResult(_mux);
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace LoadTest
         public override IEnumerator<WebTestRequest> GetRequestEnumerator()
         {
             int i = _rand.Next(1, 100000);
-            yield return new WebTestRequest($"http://<endpoint>/api/cachedemo/nas{i}");
+            yield return new WebTestRequest($"http://40.83.143.60/api/cachedemo/nas{i}");
         }
     }
 }

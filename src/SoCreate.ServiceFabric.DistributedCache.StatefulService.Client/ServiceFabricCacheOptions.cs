@@ -35,14 +35,26 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatefulService.Client
         {
             var configurationPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
 
-            CacheStoreServiceUri = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceUri"].Value;
+            if (configurationPackage.Settings.Sections["StoreConfig"].Parameters.Contains("ServiceUri"))
+            {
+                CacheStoreServiceUri = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceUri"].Value;
+            }
 
-            CacheStoreEndpointName = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceEndpointName"].Value;
+            if (configurationPackage.Settings.Sections["StoreConfig"].Parameters.Contains("ServiceEndpointName"))
+            {
+                CacheStoreEndpointName = configurationPackage.Settings.Sections["StoreConfig"].Parameters["ServiceEndpointName"].Value;
+            }
 
-            RedisConectionString = configurationPackage.Settings.Sections["StoreConfig"].Parameters["RedisConectionString"].Value;
+            if (configurationPackage.Settings.Sections["StoreConfig"].Parameters.Contains("RedisConnectionString"))
+            {
+                RedisConectionString = configurationPackage.Settings.Sections["StoreConfig"].Parameters["RedisConnectionString"].Value;
+            }
 
-            var val = configurationPackage.Settings.Sections["StoreConfig"].Parameters["IsActorService"].Value;
-            IsActorService = (bool)Convert.ChangeType(val, typeof(bool));
+            if (configurationPackage.Settings.Sections["StoreConfig"].Parameters.Contains("IsActorService"))
+            {
+                var val = configurationPackage.Settings.Sections["StoreConfig"].Parameters["IsActorService"].Value;
+                IsActorService = (bool)Convert.ChangeType(val, typeof(bool));
+            }
         }
     }
 }

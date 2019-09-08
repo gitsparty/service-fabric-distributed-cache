@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,12 +77,21 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
         [HttpGet("{key}")]
         public async Task<ActionResult<string>> Get(string key, CancellationToken cancellationToken)
         {
-            var bytes = await _distributedCacheClient.GetAsync(key, cancellationToken);
+            try
+            {
+                var bytes = await _distributedCacheClient.GetAsync(key, cancellationToken);
 
-            if(bytes != null)
-                return Content(Encoding.UTF8.GetString(bytes));
+                if (bytes != null)
+                    return Content(Encoding.UTF8.GetString(bytes));
 
-            return new NotFoundResult();
+                return new NotFoundResult();
+            }
+            catch (Exception ex)
+            {
+                var res = new ObjectResult(ex);
+                res.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return res;
+            }
         }
 
         [HttpPut("{key}")]
@@ -125,7 +135,9 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
                 }
                 catch (Exception ex)
                 {
-                    return new StatusCodeResult(500);
+                    var res = new ObjectResult(ex);
+                    res.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    return res;
                 }
             }
         }

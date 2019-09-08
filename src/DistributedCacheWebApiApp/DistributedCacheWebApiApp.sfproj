@@ -24,11 +24,13 @@
     <None Include="ApplicationParameters\Cloud.ActorServiceCacheStore.xml" />
     <None Include="ApplicationParameters\Cloud.ReliableCollectionsStore.xml" />
     <None Include="ApplicationParameters\Cloud.xml" />
+    <None Include="ApplicationParameters\Local.RedisCacheStore.1Node.xml" />
     <None Include="ApplicationParameters\Local.ActorServiceCacheStore.1Node.xml" />
     <None Include="ApplicationParameters\Local.ReliableCollectionsStore.1Node.xml" />
     <None Include="ApplicationParameters\Local.1Node.xml" />
     <None Include="ApplicationParameters\Local.5Node.xml" />
     <None Include="PublishProfiles\Cloud.xml" />
+    <None Include="PublishProfiles\Local.RedisCacheStore.1Node.xml" />
     <None Include="PublishProfiles\Local.ReliableCollectionsStore.1Node.xml" />
     <None Include="PublishProfiles\Local.ActorServiceCacheStore.1Node.xml" />
     <None Include="PublishProfiles\Local.1Node.xml" />
