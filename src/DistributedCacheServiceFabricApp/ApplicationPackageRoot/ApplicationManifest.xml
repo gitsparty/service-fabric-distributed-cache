@@ -42,13 +42,12 @@
     </EnvironmentOverrides>
   </ServiceManifestImport>
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.StatefulService" ServiceManifestVersion="1.0.0" />
+    <ServiceManifestRef ServiceManifestName="SoCreate.ServiceFabric.DistributedCache.ReliableCollectionsPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
       <ConfigOverride Name="Config">
         <Settings>
-          <Section Name="CacheConfig">
-            <Parameter Name="MaxCacheSizeInMegabytes" Value="[DistributedCacheStore_MaxCacheSizeInMegabytes]" />
-            <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]" />
+          <Section Name="StoreConfig">
+            <Parameter Name="StoreEndpointName" Value="[Common_StatefulServiceEndpointName]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -67,7 +66,7 @@
       </StatelessService>
     </Service>
     <Service Name="StatefulService_A" ServicePackageActivationMode="ExclusiveProcess">
-      <StatefulService ServiceTypeName="SoCreate.ServiceFabric.DistributedCache.StatefulService" TargetReplicaSetSize="[DistributedCacheStore_TargetReplicaSetSize]" MinReplicaSetSize="[DistributedCacheStore_MinReplicaSetSize]">
+      <StatefulService ServiceTypeName="SoCreate.ServiceFabric.DistributedCache.ReliableCollectionsType" TargetReplicaSetSize="[DistributedCacheStore_TargetReplicaSetSize]" MinReplicaSetSize="[DistributedCacheStore_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[DistributedCacheStore_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
         <PlacementConstraints>[DistributedCacheStore_PlacementConstraints]</PlacementConstraints>
       </StatefulService>
