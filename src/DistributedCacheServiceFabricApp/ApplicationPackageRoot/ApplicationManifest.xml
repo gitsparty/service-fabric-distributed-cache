@@ -7,6 +7,7 @@
     <Parameter Name="ClientApp_StoreServiceUri" DefaultValue="*" />
     <Parameter Name="ClientApp_IsActorService" DefaultValue="false" />
     <Parameter Name="ClientApp_PlacementConstraints" DefaultValue="(NodeType == NodeType0)" />
+    <Parameter Name="ClientApp_RedisConnectionString" DefaultValue="" />
     <Parameter Name="DistributedCacheStore_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="DistributedCacheStore_PartitionCount" DefaultValue="1" />
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" DefaultValue="3" />
@@ -24,7 +25,9 @@
         <Settings>
           <Section Name="StoreConfig">
             <Parameter Name="ServiceUri" Value="[ClientApp_StoreServiceUri]" />
+            <Parameter Name="IsActorService" Value="[ClientApp_IsActorService]" />
             <Parameter Name="ServiceEndpointName" Value="[Common_StatefulServiceEndpointName]" />
+            <Parameter Name="RedisConnectionString" Value="[ClientApp_RedisConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>
