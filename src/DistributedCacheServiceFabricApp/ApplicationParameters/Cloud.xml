@@ -9,5 +9,6 @@
     <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" Value="5" />
     <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" Value="3000" />
     <Parameter Name="DistributedCacheStore_PlacementConstraints" Value="(NodeType == NodeType6)" />
+    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCache/StatefulService_A" />
   </Parameters>
 </Application>

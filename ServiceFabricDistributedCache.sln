@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		remote.testsettings = remote.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadTest", "LoadTest\LoadTest.csproj", "{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadTest", "tests\LoadTest\LoadTest.csproj", "{FE7CF794-95F2-4DA9-ABA4-73C76A9718A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoCreate.ServiceFabric.DistributedCache.Redis.Client", "src\SoCreate.ServiceFabric.DistributedCache.Redis.Client\SoCreate.ServiceFabric.DistributedCache.Redis.Client.csproj", "{A30D67CC-959F-42D7-A3AF-52CF62E93219}"
 EndProject
