@@ -3,11 +3,12 @@
   <Parameters>
     <Parameter Name="ClientApp_PortNumber" Value="80" />
     <Parameter Name="ClientApp_InstanceCount" Value="-1" />
-    <Parameter Name="ClientApp_PlacementConstraints" Value="(NodeType == NodeType1)" />
-    <Parameter Name="DistributedCacheStore_PartitionCount" Value="10" />
-    <Parameter Name="DistributedCacheStore_MinReplicaSetSize" Value="3" />
-    <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" Value="3" />
+    <Parameter Name="ClientApp_PlacementConstraints" Value="(NodeType == NodeType6)" />
+    <Parameter Name="DistributedCacheStore_PartitionCount" Value="5" />
+    <Parameter Name="DistributedCacheStore_MinReplicaSetSize" Value="5" />
+    <Parameter Name="DistributedCacheStore_TargetReplicaSetSize" Value="5" />
     <Parameter Name="DistributedCacheStore_MaxCacheSizeInMegabytes" Value="3000" />
-    <Parameter Name="DistributedCacheStore_PlacementConstraints" Value="(NodeType == NodeType2)" />
+    <Parameter Name="DistributedCacheStore_PlacementConstraints" Value="(NodeType == NodeType6)" />
+    <Parameter Name="ClientApp_StoreServiceUri" Value="fabric:/DistributedCache/StatefulService_A" />
   </Parameters>
 </Application>

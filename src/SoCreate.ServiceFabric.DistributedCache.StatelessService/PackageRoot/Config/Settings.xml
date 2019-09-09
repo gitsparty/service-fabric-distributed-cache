@@ -10,5 +10,6 @@
     <Parameter Name="ServiceUri" Value="*" />
     <Parameter Name="ServiceEndpointName" Value="" />
     <Parameter Name="IsActorService" Value=""/>
+    <Parameter Name="RedisConnectionString" Value="" />
   </Section>
 </Settings>

@@ -32,8 +32,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.ReliableCollections\SoCreate.ServiceFabric.DistributedCache.ReliableCollections.csproj" />
     <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.StatelessService\SoCreate.ServiceFabric.DistributedCache.StatelessService.csproj" />
-    <ProjectReference Include="..\SoCreate.ServiceFabric.DistributedCache.StatefulService\SoCreate.ServiceFabric.DistributedCache.StatefulService.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>
