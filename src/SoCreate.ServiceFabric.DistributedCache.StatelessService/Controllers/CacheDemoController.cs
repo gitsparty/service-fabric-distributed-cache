@@ -63,6 +63,13 @@ namespace SoCreate.ServiceFabric.DistributedCache.StatelessService
             return new EmptyResult();
         }
 
+        [HttpGet("BaselinePerf")]
+        public Task<ActionResult<string>> BaselinePerf(CancellationToken cancellationToken)
+        {
+            ActionResult<string> result = Content("nas");
+            return Task.FromResult(result);
+        }
+
         [HttpGet("GetAbsoluteExpirationCacheItem")]
         public async Task<ActionResult<string>> GetAbsoluteExpirationCacheItem(CancellationToken cancellationToken)
         {
